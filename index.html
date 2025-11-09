@@ -141,14 +141,14 @@
             100% { left: 100%; }
         }
         
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
         
         .product-card {
             background: white;
@@ -410,6 +410,35 @@
             cursor: pointer;
             margin-top: 1rem;
         }
+        /* Стили для скидок */
+        .discount-badge {
+            background: linear-gradient(45deg, #ff4444, #ff6b6b);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(255, 68, 68, 0.3);
+        }
+        
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        .new-price {
+            color: #2c5530;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .price-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
     </style>
 </head>
 <body>
@@ -471,132 +500,146 @@
         </div>
     </section>
 
-    <script>
-        // База данных товаров с путями к изображениям
-        const products = {
-            1: {
-                name: 'Куртка джинсовая 90-х',
-                category: 'jackets',
-                price: '80 руб',
-                size: 'M',
-                condition: 'Хорошее',
-                description: 'Винтажная джинсовая куртка в отличном состоянии. Идеально подходит для создания стильного образа.',
-                image: 'Куртка джинсовая 90-х.jpg'
-            },
-            2: {
-                name: 'Куртка кожаная 2000-х',
-                category: 'jackets',
-                price: '150 руб', 
-                size: 'L',
-                condition: 'Отличное',
-                description: 'Качественная кожаная куртка. Стиль 2000-х годов в отличном состоянии.',
-                image: 'Куртка кожаная 2000-х.jpg'
-            },
-            3: {
-                name: 'Джинсы винтажные 90-х',
-                category: 'jeans',
-                price: '70 руб',
-                size: 'W32 L34',
-                condition: 'Хорошее',
-                description: 'Аутентичные джинсы 90-х годов. Уникальный винтажный крой.',
-                image: 'Джинсы винтажные 90-х.jpg'
-            },
-            4: {
-                name: 'Джинсы потертые 2010',
-                category: 'jeans',
-                price: '60 руб',
-                size: 'W30 L32',
-                condition: 'Отличное',
-                description: 'Стильные потертые джинсы. Модный distressed эффект.',
-                image: 'Джинсы потертые 2010.jpg'
-            },
-            5: {
-                name: 'Куртка ветровка 80-х',
-                category: 'jackets',
-                price: '90 руб',
-                size: 'L',
-                condition: 'Удовлетворительное',
-                description: 'Винтажная ветровка в стиле 80-х. Яркий цвет, отличное состояние.',
-                image: 'Куртка ветровка 80-х.jpg'
-            },
-            6: {
-                name: 'Джинсы клеш 70-х',
-                category: 'jeans',
-                price: '85 руб',
-                size: 'W31 L32',
-                condition: 'Хорошее',
-                description: 'Настоящие джинсы клеш эпохи диско. Уникальный предмет гардероба.',
-                image: 'Джинсы клеш 70-х.jpg'
-            },
-            7: {
-                name: 'Куртка байкерская',
-                category: 'jackets',
-                price: '200 руб',
-                size: 'XL',
-                condition: 'Отличное',
-                description: 'Настоящая байкерская куртка с металлической фурнитурой.',
-                image: 'Куртка байкерская.jpg'
-            },
-            8: {
-                name: 'Джинсы с вышивкой',
-                category: 'jeans',
-                price: '75 руб',
-                size: 'W30 L30',
-                condition: 'Хорошее',
-                description: 'Джинсы с уникальной ручной вышивкой. Эксклюзивный дизайн.',
-                image: 'Джинсы с вышивкой.jpg'
-            }
-        };
+<script>
+    // База данных товаров с путями к изображениям
+    const products = {
+        1: {
+            name: 'Куртка джинсовая 90-х',
+            category: 'jackets',
+            price: '80 руб',
+            size: 'M',
+            condition: 'Хорошее',
+            description: 'Винтажная джинсовая куртка в отличном состоянии. Идеально подходит для создания стильного образа.',
+            image: 'Куртка джинсовая 90-х.jpg'
+        },
+        2: {
+            name: 'Куртка кожаная 2000-х',
+            category: 'jackets',
+            price: '150 руб', 
+            size: 'L',
+            condition: 'Отличное',
+            description: 'Качественная кожаная куртка. Стиль 2000-х годов в отличном состоянии.',
+            image: 'Куртка кожаная 2000-х.jpg'
+        },
+        3: {
+            name: 'Джинсы винтажные 90-х',
+            category: 'jeans',
+            price: '70 руб',
+            size: 'W32 L34',
+            condition: 'Хорошее',
+            description: 'Аутентичные джинсы 90-х годов. Уникальный винтажный крой.',
+            image: 'Джинсы винтажные 90-х.jpg'
+        },
+        4: {
+            name: 'Джинсы потертые 2010',
+            category: 'jeans',
+            price: '60 руб',
+            size: 'W30 L32',
+            condition: 'Отличное',
+            description: 'Стильные потертые джинсы. Модный distressed эффект.',
+            image: 'Джинсы потертые 2010.jpg'
+        },
+        5: {
+            name: 'Куртка ветровка 80-х',
+            category: 'jackets',
+            price: '90 руб',
+            size: 'L',
+            condition: 'Удовлетворительное',
+            description: 'Винтажная ветровка в стиле 80-х. Яркий цвет, отличное состояние.',
+            image: 'Куртка ветровка 80-х.jpg'
+        },
+        6: {
+            name: 'Джинсы клеш 70-х',
+            category: 'jeans',
+            price: '85 руб',
+            size: 'W31 L32',
+            condition: 'Хорошее',
+            description: 'Настоящие джинсы клеш эпохи диско. Уникальный предмет гардероба.',
+            image: 'Джинсы клеш 70-х.jpg'
+        },
+        7: {
+            name: 'Куртка байкерская',
+            category: 'jackets',
+            price: '200 руб',
+            size: 'XL',
+            condition: 'Отличное',
+            description: 'Настоящая байкерская куртка с металлической фурнитурой.',
+            image: 'Куртка байкерская.jpg'
+        },
+        8: {
+            name: 'Джинсы с вышивкой',
+            category: 'jeans',
+            price: '75 руб',
+            size: 'W30 L30',
+            condition: 'Хорошее',
+            description: 'Джинсы с уникальной ручной вышивкой. Эксклюзивный дизайн.',
+            image: 'Джинсы с вышивкой.jpg'
+        }
+    };
 
-        let currentPage = 1;
-        const productsPerPage = 4;
-        let currentCategory = 'all';
-        let cart = [];
+    let currentPage = 1;
+    const productsPerPage = 8;
+    let currentCategory = 'all';
+    let cart = [];
 
-        // Загрузка всех товаров
-        function loadAllProducts(page = 1, category = 'all') {
-            currentPage = page;
-            currentCategory = category;
-            
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
+    // Загрузка всех товаров
+    function loadAllProducts(page = 1, category = 'all') {
+        currentPage = page;
+        currentCategory = category;
+        
+        const grid = document.getElementById('productsGrid');
+        grid.innerHTML = '';
 
-            // Фильтрация по категории
-            let filteredProducts = Object.entries(products);
-            if (category !== 'all') {
-                filteredProducts = filteredProducts.filter(([id, product]) => product.category === category);
-            }
+        // Фильтрация по категории
+        let filteredProducts = Object.entries(products);
+        if (category !== 'all') {
+            filteredProducts = filteredProducts.filter(([id, product]) => product.category === category);
+        }
 
-            // Пагинация
-            const startIndex = (page - 1) * productsPerPage;
-            const endIndex = startIndex + productsPerPage;
-            const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+        // Пагинация
+        const startIndex = (page - 1) * productsPerPage;
+        const endIndex = startIndex + productsPerPage;
+        const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
-            // Обновление кнопок категорий
-            document.querySelectorAll('.category-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event?.target.classList.add('active');
+        // Обновление кнопок категорий
+        document.querySelectorAll('.category-button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`.category-button[onclick="filterCategory('${category}')"]`).classList.add('active');
 
             // Отображение товаров
             paginatedProducts.forEach(([article, product]) => {
                 const productCard = `
-                    <div class="product-card">
+                    <div class="product-card" onclick="showProduct(${article})" style="cursor: pointer;">
                         <div class="product-image">
                             <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentNode.innerHTML='📷 ${product.name}'">
                         </div>
                         <div class="product-info">
                             <span class="product-article">Артикул: ${article}</span>
                             <h3>${product.name}</h3>
-                            <div class="product-price">${product.price}</div>
+                            <div class="product-price">
+                                ${product.oldPrice && product.hasDiscount ? `
+                                    <div class="price-container">
+                                        <div style="display: flex; flex-direction: column;">
+                                            <span class="old-price">${product.oldPrice}</span>
+                                            <span class="new-price">${product.price}</span>
+                                        </div>
+                                        <span class="discount-badge">
+                                            -${Math.round((1 - extractNumber(product.price) / extractNumber(product.oldPrice)) * 100)}%
+                                        </span>
+                                    </div>
+                                ` : `
+                                    <span>${product.price}</span>
+                                `}
+                            </div>
                             <p><strong>Размер:</strong> ${product.size}</p>
                             <p><strong>Состояние:</strong> ${product.condition}</p>
                             <p class="product-description">${product.description}</p>
                             <div class="product-actions">
-                                <button class="cart-button" onclick="addToCart(${article})">
+                                <button class="cart-button" onclick="event.stopPropagation(); addToCart(${article})">
                                     🛒 В корзину
                                 </button>
-                                <button class="buy-button" onclick="reserveProduct(${article})">
+                                <button class="buy-button" onclick="event.stopPropagation(); reserveProduct(${article})">
                                     💬 Забронировать
                                 </button>
                             </div>
@@ -606,182 +649,221 @@
                 grid.innerHTML += productCard;
             });
 
-            // Пагинация
-            updatePagination(filteredProducts.length, page, category);
+        // Пагинация
+        updatePagination(filteredProducts.length, page, category);
+    }
+
+    // Обновление пагинации
+    function updatePagination(totalProducts, currentPage, category) {
+        const totalPages = Math.ceil(totalProducts / productsPerPage);
+        const paginationDiv = document.getElementById('pagination');
+        paginationDiv.innerHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.className = `page-button ${i === currentPage ? 'active' : ''}`;
+            pageButton.textContent = i;
+            pageButton.onclick = () => loadAllProducts(i, category);
+            paginationDiv.appendChild(pageButton);
         }
+    }
 
-        // Обновление пагинации
-        function updatePagination(totalProducts, currentPage, category) {
-            const totalPages = Math.ceil(totalProducts / productsPerPage);
-            const paginationDiv = document.getElementById('pagination');
-            paginationDiv.innerHTML = '';
+    // Корзина
+    function addToCart(productId) {
+        const product = products[productId];
+        cart.push({
+            id: productId,
+            ...product
+        });
+        updateCart();
+        alert(`"${product.name}" добавлен в корзину!`);
+    }
 
-            for (let i = 1; i <= totalPages; i++) {
-                const pageButton = document.createElement('button');
-                pageButton.className = `page-button ${i === currentPage ? 'active' : ''}`;
-                pageButton.textContent = i;
-                pageButton.onclick = () => loadAllProducts(i, category);
-                paginationDiv.appendChild(pageButton);
-            }
-        }
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCart();
+    }
 
-        // Корзина
-        function addToCart(productId) {
-            const product = products[productId];
-            cart.push({
-                id: productId,
-                ...product
-            });
-            updateCart();
-            alert(`"${product.name}" добавлен в корзину!`);
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCart();
-        }
-
-        function updateCart() {
-            const cartCount = document.getElementById('cartCount');
-            const cartItems = document.getElementById('cartItems');
-            const cartTotal = document.getElementById('cartTotal');
+    function updateCart() {
+        const cartCount = document.getElementById('cartCount');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        
+        // Обновляем счетчик
+        cartCount.textContent = cart.length;
+        
+        // Обновляем список товаров
+        cartItems.innerHTML = '';
+        let total = 0;
+        
+        cart.forEach((item, index) => {
+            const price = parseInt(item.price);
+            total += price;
             
-            // Обновляем счетчик
-            cartCount.textContent = cart.length;
-            
-            // Обновляем список товаров
-            cartItems.innerHTML = '';
-            let total = 0;
-            
-            cart.forEach((item, index) => {
-                const price = parseInt(item.price);
-                total += price;
-                
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <div class="cart-item-image">
-                        <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'; this.parentNode.innerHTML='📷'">
+            const cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+                <div class="cart-item-image">
+                    <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'; this.parentNode.innerHTML='📷'">
+                </div>
+                <div class="cart-item-info">
+                    <h4>${item.name}</h4>
+                    <div class="cart-item-price">${item.price}</div>
+                </div>
+                <button class="remove-from-cart" onclick="removeFromCart(${index})">❌</button>
+            `;
+            cartItems.appendChild(cartItem);
+        });
+        
+        // Обновляем итоговую сумму
+        cartTotal.textContent = `Итого: ${total} руб`;
+    }
+
+    function toggleCart() {
+        const sidebar = document.getElementById('cartSidebar');
+        const overlay = document.getElementById('cartOverlay');
+        
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('show');
+    }
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert('Корзина пуста!');
+            return;
+        }
+        
+        const total = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
+        const itemList = cart.map(item => `• ${item.name} - ${item.price}`).join('\n');
+        
+        alert(`Заказ оформлен!\n\nТовары:\n${itemList}\n\nОбщая сумма: ${total} руб\n\nСвяжитесь с нами в Telegram для уточнения деталей!`);
+        
+        // Очищаем корзину
+        cart = [];
+        updateCart();
+        toggleCart();
+    }
+
+    // Фильтрация по категории
+    function filterCategory(category) {
+        loadAllProducts(1, category);
+    }
+
+    // Поиск по артикулу
+    function searchByArticle() {
+        const article = document.getElementById('articleInput').value;
+        if (article && products[article]) {
+            showProduct(article);
+        } else {
+            alert('Товар с таким артикулом не найден!');
+        }
+    }
+
+    // Показать детальную страницу товара
+    // Показать детальную страницу товара
+    function showProduct(article) {
+        const product = products[article];
+        
+        document.getElementById('allProducts').classList.add('hidden');
+        document.getElementById('singleProduct').classList.remove('hidden');
+        
+        const productDetail = document.getElementById('productDetail');
+        productDetail.innerHTML = `
+            <div class="product-card" style="max-width: 800px; margin: 0 auto;">
+                <div class="product-image" style="height: 500px; background: #f8f8f8; display: flex; align-items: center; justify-content: center;">
+                    <img src="${product.image}" alt="${product.name}" 
+                         style="max-width: 100%; max-height: 100%; object-fit: contain;"
+                         onerror="this.style.display='none'; this.parentNode.innerHTML='📷 ${product.name}'">
+                </div>
+                <div class="product-info">
+                    <span class="product-article">Артикул: ${article}</span>
+                    <h2>${product.name}</h2>
+                    <div class="product-price" style="font-size: 1.8rem;">
+                        ${product.oldPrice && product.hasDiscount ? `
+                            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                                <div style="display: flex; flex-direction: column;">
+                                    <span style="text-decoration: line-through; color: #999; font-size: 0.9em;">${product.oldPrice}</span>
+                                    <span style="color: #2c5530; font-weight: bold; font-size: 1.1em;">${product.price}</span>
+                                </div>
+                                <span style="background: #ff4444; color: white; padding: 5px 12px; border-radius: 15px; font-size: 1em; font-weight: bold;">
+                                    Скидка ${Math.round((1 - extractNumber(product.price) / extractNumber(product.oldPrice)) * 100)}%
+                                </span>
+                            </div>
+                        ` : `
+                            <span>${product.price}</span>
+                        `}
                     </div>
-                    <div class="cart-item-info">
-                        <h4>${item.name}</h4>
-                        <div class="cart-item-price">${item.price}</div>
-                    </div>
-                    <button class="remove-from-cart" onclick="removeFromCart(${index})">❌</button>
-                `;
-                cartItems.appendChild(cartItem);
-            });
-            
-            // Обновляем итоговую сумму
-            cartTotal.textContent = `Итого: ${total} руб`;
-        }
-
-        function toggleCart() {
-            const sidebar = document.getElementById('cartSidebar');
-            const overlay = document.getElementById('cartOverlay');
-            
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('show');
-        }
-
-        function checkout() {
-            if (cart.length === 0) {
-                alert('Корзина пуста!');
-                return;
-            }
-            
-            const total = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
-            const itemList = cart.map(item => `• ${item.name} - ${item.price}`).join('\n');
-            
-            alert(`Заказ оформлен!\n\nТовары:\n${itemList}\n\nОбщая сумма: ${total} руб\n\nСвяжитесь с нами в Telegram для уточнения деталей!`);
-            
-            // Очищаем корзину
-            cart = [];
-            updateCart();
-            toggleCart();
-        }
-
-        // Фильтрация по категории
-        function filterCategory(category) {
-            loadAllProducts(1, category);
-        }
-
-        // Поиск по артикулу
-        function searchByArticle() {
-            const article = document.getElementById('articleInput').value;
-            if (article && products[article]) {
-                showProduct(article);
-            } else {
-                alert('Товар с таким артикулом не найден!');
-            }
-        }
-
-        // Показать конкретный товар
-        function showProduct(article) {
-            const product = products[article];
-            
-            document.getElementById('allProducts').classList.add('hidden');
-            document.getElementById('singleProduct').classList.remove('hidden');
-            
-            const productDetail = document.getElementById('productDetail');
-            productDetail.innerHTML = `
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentNode.innerHTML='📷 ${product.name}'">
-                    </div>
-                    <div class="product-info">
-                        <span class="product-article">Артикул: ${article}</span>
-                        <h2>${product.name}</h2>
-                        <div class="product-price">${product.price}</div>
-                        <p><strong>Размер:</strong> ${product.size}</p>
-                        <p><strong>Состояние:</strong> ${product.condition}</p>
-                        <p class="product-description">${product.description}</p>
-                        <div class="product-actions">
-                            <button class="cart-button" onclick="addToCart(${article})">
-                                🛒 В корзину
-                            </button>
-                            <button class="buy-button" onclick="reserveProduct(${article})">
-                                💬 Забронировать
-                            </button>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <strong>📏 Размер:</strong>
+                            <div style="margin-top: 0.5rem;">
+                                <button class="size-btn active" style="
+                                    background: #000;
+                                    color: #ffd700;
+                                    border: none;
+                                    padding: 8px 16px;
+                                    border-radius: 5px;
+                                    font-weight: bold;
+                                ">${product.size}</button>
+                            </div>
+                        </div>
+                        <div>
+                            <strong>⭐ Состояние:</strong>
+                            <p>${product.condition}</p>
                         </div>
                     </div>
+                    
+                    <div style="margin: 1rem 0;">
+                        <strong>📝 Описание:</strong>
+                        <p class="product-description">${product.description}</p>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <button class="cart-button" onclick="addToCart(${article})">
+                            🛒 Добавить в корзину
+                        </button>
+                        <button class="buy-button" onclick="reserveProduct(${article})">
+                            💬 Забронировать сейчас
+                        </button>
+                    </div>
                 </div>
-            `;
-        }
+            </div>
+        `;
+    }
+    // Показать все товары
+    function showAllProducts() {
+        document.getElementById('allProducts').classList.remove('hidden');
+        document.getElementById('singleProduct').classList.add('hidden');
+    }
 
-        // Показать все товары
-        function showAllProducts() {
-            document.getElementById('allProducts').classList.remove('hidden');
-            document.getElementById('singleProduct').classList.add('hidden');
-        }
+    // Бронирование товара
+    function reserveProduct(article) {
+        const product = products[article];
+        alert(`Товар "${product.name}" зарезервирован!\n\nСвяжитесь с нами в Telegram для уточнения деталей.`);
+    }
 
-        // Бронирование товара
-        function reserveProduct(article) {
-            const product = products[article];
-            alert(`Товар "${product.name}" зарезервирован!\n\nСвяжитесь с нами в Telegram для уточнения деталей.`);
+    // Обработка URL параметров
+    function checkUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const article = urlParams.get('article');
+        if (article && products[article]) {
+            showProduct(article);
         }
+    }
 
-        // Обработка URL параметров
-        function checkUrlParams() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const article = urlParams.get('article');
-            if (article && products[article]) {
-                showProduct(article);
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', function() {
+        loadAllProducts();
+        checkUrlParams();
+        
+        document.getElementById('articleInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchByArticle();
             }
-        }
-
-        // Инициализация
-        document.addEventListener('DOMContentLoaded', function() {
-            loadAllProducts();
-            checkUrlParams();
-            
-            document.getElementById('articleInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    searchByArticle();
-                }
-            });
         });
-    </script>
+    });
+</script>
  <!-- Футер -->
 <footer style="
     background: linear-gradient(45deg, #000, #333);
@@ -900,14 +982,14 @@
         overflow-y: auto;
     ">
         <div style="
-            max-width: 800px;
+            max-width: 900px;
             margin: 2rem auto;
             background: white;
             border-radius: 15px;
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         ">
-            <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <h2 style="color: #333; margin: 0;">🛠️ Панель управления товарами</h2>
                 <button onclick="hideAdminPanel()" style="
                     background: #ff4444;
@@ -918,6 +1000,11 @@
                     cursor: pointer;
                     font-size: 16px;
                 ">Закрыть</button>
+            </div>
+
+            <!-- Статистика -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 2rem;" id="adminStats">
+                <!-- Статистика будет загружена через JavaScript -->
             </div>
 
             <!-- Форма добавления товара -->
@@ -938,15 +1025,29 @@
                     
                     <div>
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Цена:</label>
-                        <input type="text" id="adminProductPrice" style="
-                            width: 100%;
-                            padding: 10px;
-                            border: 2px solid #ddd;
-                            border-radius: 5px;
-                            font-size: 16px;
-                        " placeholder="Например: 150 руб">
+                        <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px;">
+                            <input type="text" id="adminProductPrice" style="
+                                flex: 1;
+                                padding: 10px;
+                                border: 2px solid #ddd;
+                                border-radius: 5px;
+                                font-size: 16px;
+                            " placeholder="150" oninput="formatPrice(this)">
+                            <span style="color: #666; font-weight: bold;">руб</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <input type="text" id="adminProductOldPrice" style="
+                                flex: 1;
+                                padding: 10px;
+                                border: 2px solid #ff4444;
+                                border-radius: 5px;
+                                font-size: 16px;
+                                background: #fff5f5;
+                            " placeholder="200" oninput="formatPrice(this)">
+                            <span style="color: #666; font-weight: bold;">руб</span>
+                        </div>
+                        <div id="discountCalculation" style="font-size: 12px; color: #666; margin-top: 5px;"></div>
                     </div>
-                </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                     <div>
@@ -1025,9 +1126,29 @@
 
             <!-- Список товаров для управления -->
             <div>
-                <h3 style="color: #333; margin-bottom: 1rem;">📦 Управление товарами</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="color: #333; margin: 0;">📦 Управление товарами</h3>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="text" id="adminSearchInput" placeholder="🔍 Поиск товаров..." style="
+                            padding: 8px 12px;
+                            border: 2px solid #ddd;
+                            border-radius: 5px;
+                            font-size: 14px;
+                            width: 250px;
+                        ">
+                        <button onclick="clearAdminSearch()" style="
+                            background: #666;
+                            color: white;
+                            border: none;
+                            padding: 8px 12px;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            font-size: 14px;
+                        ">Очистить</button>
+                    </div>
+                </div>
                 <div id="adminProductsList" style="
-                    max-height: 400px;
+                    max-height: 500px;
                     overflow-y: auto;
                     border: 2px solid #eee;
                     border-radius: 10px;
@@ -1044,12 +1165,17 @@
     // Пароль админки (МОЖНО ПОМЕНЯТЬ)
     const ADMIN_PASSWORD = "vintage2024";
 
+    let editingProductId = null;
+
     // Функции админ-панели
     function showAdminPanel() {
         const password = prompt("🔐 Введите пароль админ-панели:");
         if (password === ADMIN_PASSWORD) {
             document.getElementById('adminPanel').style.display = 'block';
+            loadAdminStats();
             loadAdminProductsList();
+            setupAdminSearch();
+            setupDiscountCalculator(); 
         } else if (password) {
             alert("❌ Неверный пароль!");
         }
@@ -1057,11 +1183,61 @@
 
     function hideAdminPanel() {
         document.getElementById('adminPanel').style.display = 'none';
+        editingProductId = null;
+        resetAddForm();
     }
 
+    function loadAdminStats() {
+        const statsContainer = document.getElementById('adminStats');
+        const totalProducts = Object.keys(products).length;
+        const jacketsCount = Object.values(products).filter(p => p.category === 'jackets').length;
+        const jeansCount = Object.values(products).filter(p => p.category === 'jeans').length;
+        
+        statsContainer.innerHTML = `
+            <div style="background: #e3f2fd; padding: 1rem; border-radius: 10px; text-align: center;">
+                <div style="font-size: 2rem; font-weight: bold; color: #1976d2;">${totalProducts}</div>
+                <div style="color: #333;">Всего товаров</div>
+            </div>
+            <div style="background: #e8f5e8; padding: 1rem; border-radius: 10px; text-align: center;">
+                <div style="font-size: 2rem; font-weight: bold; color: #2e7d32;">${jacketsCount}</div>
+                <div style="color: #333;">Куртки</div>
+            </div>
+            <div style="background: #fff3e0; padding: 1rem; border-radius: 10px; text-align: center;">
+                <div style="font-size: 2rem; font-weight: bold; color: #f57c00;">${jeansCount}</div>
+                <div style="color: #333;">Джинсы</div>
+            </div>
+        `;
+    }
+    // Обработка скидок
+    function setupDiscountCalculator() {
+        const priceInput = document.getElementById('adminProductPrice');
+        const oldPriceInput = document.getElementById('adminProductOldPrice');
+        const discountElement = document.getElementById('discountCalculation');
+        
+        function calculateDiscount() {
+            const price = parseInt(priceInput.value) || 0;
+            const oldPrice = parseInt(oldPriceInput.value) || 0;
+            
+            if (oldPrice > 0 && price > 0 && oldPrice > price) {
+                const discount = Math.round((1 - price / oldPrice) * 100);
+                discountElement.innerHTML = `🎉 Скидка: ${discount}% (Экономия: ${oldPrice - price} руб)`;
+                discountElement.style.color = '#2e7d32';
+                discountElement.style.fontWeight = 'bold';
+            } else if (oldPrice > 0) {
+                discountElement.innerHTML = '❌ Цена со скидкой должна быть меньше старой цены';
+                discountElement.style.color = '#ff4444';
+            } else {
+                discountElement.innerHTML = '';
+            }
+        }
+        
+        priceInput.addEventListener('input', calculateDiscount);
+        oldPriceInput.addEventListener('input', calculateDiscount);
+    }
     function addProductViaAdmin() {
         const name = document.getElementById('adminProductName').value;
         const price = document.getElementById('adminProductPrice').value;
+        const oldPrice = document.getElementById('adminProductOldPrice').value;
         const category = document.getElementById('adminProductCategory').value;
         const size = document.getElementById('adminProductSize').value;
         const condition = document.getElementById('adminProductCondition').value;
@@ -1074,44 +1250,196 @@
             return;
         }
 
-        // Создаем новый товар
-        const newProductId = Date.now(); // Уникальный ID на основе времени
-        products[newProductId] = {
-            name: name,
-            category: category,
-            price: price,
-            size: size,
-            condition: condition,
-            description: description,
-            image: image
-        };
+        if (editingProductId) {
+            // Редактируем существующий товар
+            products[editingProductId] = {
+                name: name,
+                category: category,
+                price: price,
+                oldPrice: oldPrice || null,
+                size: size,
+                condition: condition,
+                description: description,
+                image: image,
+                hasDiscount: oldPrice && parseInt(oldPrice) > parseInt(price)
+            };
+            alert("✅ Товар успешно обновлен!");
+            editingProductId = null;
+        } else {
+            // Создаем новый товар
+            const newProductId = Date.now();
+            products[newProductId] = {
+                name: name,
+                category: category,
+                price: price,
+                oldPrice: oldPrice || null,
+                size: size,
+                condition: condition,
+                description: description,
+                image: image,
+                hasDiscount: oldPrice && parseInt(oldPrice) > parseInt(price)
+            };
+            alert("✅ Товар успешно добавлен!");
+        }
 
         // Сохраняем в localStorage
         saveProductsToStorage();
 
-        // Обновляем список товаров в админке
+        // Обновляем статистику и список товаров
+        loadAdminStats();
         loadAdminProductsList();
 
         // Очищаем форму
+        resetAddForm();
+    }
+
+    function editProduct(productId) {
+        const product = products[productId];
+        
+        // Извлекаем только числа из цен
+        const priceNumber = extractNumber(product.price);
+        const oldPriceNumber = product.oldPrice ? extractNumber(product.oldPrice) : '';
+        
+        // Заполняем форму данными товара
+        document.getElementById('adminProductName').value = product.name;
+        document.getElementById('adminProductPrice').value = priceNumber;
+        document.getElementById('adminProductOldPrice').value = oldPriceNumber;
+        document.getElementById('adminProductCategory').value = product.category;
+        document.getElementById('adminProductSize').value = product.size;
+        document.getElementById('adminProductCondition').value = product.condition;
+        document.getElementById('adminProductDescription').value = product.description;
+        document.getElementById('adminProductImage').value = product.image;
+        
+        editingProductId = productId;
+        
+        // Прокручиваем к форме
+        document.querySelector('#adminPanel [id="adminProductName"]').scrollIntoView({ behavior: 'smooth' });
+        
+        alert("✏️ Редактируйте товар и нажмите 'Добавить товар' для сохранения");
+        
+        // Рассчитываем скидку при редактировании
+        setTimeout(() => {
+            calculateDiscountForInputs(priceNumber, oldPriceNumber);
+        }, 100);
+    }
+    // Форматирование цены - только цифры и точка
+    function formatPrice(input) {
+        // Убираем всё кроме цифр и точки
+        let value = input.value.replace(/[^\d.]/g, '');
+        
+        // Убираем лишние точки (оставляем только первую)
+        const dots = value.split('.').length - 1;
+        if (dots > 1) {
+            value = value.replace(/\.+$/, ''); // убираем точки в конце
+            const parts = value.split('.');
+            value = parts[0] + (parts[1] ? '.' + parts[1] : '');
+        }
+        
+        // Ограничиваем двумя знаками после запятой
+        if (value.includes('.')) {
+            const parts = value.split('.');
+            if (parts[1].length > 2) {
+                parts[1] = parts[1].substring(0, 2);
+                value = parts[0] + '.' + parts[1];
+            }
+        }
+        
+        input.value = value;
+        
+        // Обновляем расчет скидки если это поле цены
+        if (input.id === 'adminProductPrice' || input.id === 'adminProductOldPrice') {
+            const priceInput = document.getElementById('adminProductPrice');
+            const oldPriceInput = document.getElementById('adminProductOldPrice');
+            if (priceInput && oldPriceInput) {
+                calculateDiscountForInputs(priceInput.value, oldPriceInput.value);
+            }
+        }
+    }
+
+    // Расчет скидки для форматированных цен
+    function calculateDiscountForInputs(price, oldPrice) {
+        const discountElement = document.getElementById('discountCalculation');
+        const priceNum = parseFloat(price) || 0;
+        const oldPriceNum = parseFloat(oldPrice) || 0;
+        
+        if (oldPriceNum > 0 && priceNum > 0 && oldPriceNum > priceNum) {
+            const discount = Math.round((1 - priceNum / oldPriceNum) * 100);
+            discountElement.innerHTML = `🎉 Скидка: ${discount}% (Экономия: ${oldPriceNum - priceNum} руб)`;
+            discountElement.style.color = '#2e7d32';
+            discountElement.style.fontWeight = 'bold';
+        } else if (oldPriceNum > 0) {
+            discountElement.innerHTML = '❌ Цена со скидкой должна быть меньше старой цены';
+            discountElement.style.color = '#ff4444';
+        } else {
+            discountElement.innerHTML = '';
+        }
+    }
+
+    // Функция для извлечения чисел (теперь проще)
+    function extractNumber(priceString) {
+        if (!priceString) return 0;
+        return parseFloat(priceString) || 0;
+    }
+
+    // Обработка скидок
+    function setupDiscountCalculator() {
+        const priceInput = document.getElementById('adminProductPrice');
+        const oldPriceInput = document.getElementById('adminProductOldPrice');
+        
+        function calculateDiscount() {
+            const price = priceInput.value || '0';
+            const oldPrice = oldPriceInput.value || '0';
+            calculateDiscountForInputs(price, oldPrice);
+        }
+        
+        priceInput.addEventListener('input', calculateDiscount);
+        oldPriceInput.addEventListener('input', calculateDiscount);
+    }
+    function resetAddForm() {
         document.getElementById('adminProductName').value = '';
         document.getElementById('adminProductPrice').value = '';
+        document.getElementById('adminProductOldPrice').value = '';
         document.getElementById('adminProductSize').value = '';
         document.getElementById('adminProductCondition').value = '';
         document.getElementById('adminProductDescription').value = '';
         document.getElementById('adminProductImage').value = '';
-
-        alert("✅ Товар успешно добавлен!");
+        document.getElementById('adminProductCategory').value = 'jackets';
+        document.getElementById('discountCalculation').innerHTML = '';
+    }
+  // Поиск в админ-панели
+    function setupAdminSearch() {
+        const searchInput = document.getElementById('adminSearchInput');
+        searchInput.addEventListener('input', function(e) {
+            filterAdminProducts(e.target.value);
+        });
     }
 
-    function loadAdminProductsList() {
+    function filterAdminProducts(searchTerm) {
         const container = document.getElementById('adminProductsList');
         container.innerHTML = '';
 
-        for (const [id, product] of Object.entries(products)) {
+        const filteredProducts = Object.entries(products).filter(([id, product]) => {
+            const searchLower = searchTerm.toLowerCase();
+            return (
+                product.name.toLowerCase().includes(searchLower) ||
+                product.price.toLowerCase().includes(searchLower) ||
+                product.size.toLowerCase().includes(searchLower) ||
+                product.condition.toLowerCase().includes(searchLower) ||
+                product.description.toLowerCase().includes(searchLower) ||
+                id.includes(searchTerm)
+            );
+        });
+
+        if (filteredProducts.length === 0) {
+            container.innerHTML = '<div style="text-align: center; color: #666; padding: 2rem;">😞 Товары не найдены</div>';
+            return;
+        }
+
+        filteredProducts.forEach(([id, product]) => {
             const productElement = document.createElement('div');
             productElement.style.cssText = `
                 display: flex;
-                justify-content: between;
+                justify-content: space-between;
                 align-items: center;
                 padding: 1rem;
                 border-bottom: 1px solid #eee;
@@ -1123,17 +1451,81 @@
             productElement.innerHTML = `
                 <div style="flex: 1;">
                     <strong>${product.name}</strong><br>
-                    <small>Цена: ${product.price} | Размер: ${product.size}</small>
+                    <small>Цена: ${product.price} | Размер: ${product.size} | Категория: ${product.category === 'jackets' ? '🧥 Куртки' : '👖 Джинсы'}</small>
                 </div>
-                <button onclick="deleteProduct(${id})" style="
-                    background: #ff4444;
-                    color: white;
-                    border: none;
-                    padding: 5px 10px;
-                    border-radius: 3px;
-                    cursor: pointer;
-                    font-size: 12px;
-                ">🗑️ Удалить</button>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="editProduct(${id})" style="
+                        background: #4CAF50;
+                        color: white;
+                        border: none;
+                        padding: 5px 10px;
+                        border-radius: 3px;
+                        cursor: pointer;
+                        font-size: 12px;
+                    ">✏️ Редактировать</button>
+                    <button onclick="deleteProduct(${id})" style="
+                        background: #ff4444;
+                        color: white;
+                        border: none;
+                        padding: 5px 10px;
+                        border-radius: 3px;
+                        cursor: pointer;
+                        font-size: 12px;
+                    ">🗑️ Удалить</button>
+                </div>
+            `;
+
+            container.appendChild(productElement);
+        });
+    }
+
+    function clearAdminSearch() {
+        document.getElementById('adminSearchInput').value = '';
+        loadAdminProductsList();
+    }
+
+    function loadAdminProductsList() {
+        const container = document.getElementById('adminProductsList');
+        container.innerHTML = '';
+
+        for (const [id, product] of Object.entries(products)) {
+            const productElement = document.createElement('div');
+            productElement.style.cssText = `
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem;
+                border-bottom: 1px solid #eee;
+                background: white;
+                margin-bottom: 0.5rem;
+                border-radius: 5px;
+            `;
+
+            productElement.innerHTML = `
+                <div style="flex: 1;">
+                    <strong>${product.name}</strong><br>
+                    <small>Цена: ${product.price} | Размер: ${product.size} | Категория: ${product.category === 'jackets' ? '🧥 Куртки' : '👖 Джинсы'}</small>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="editProduct(${id})" style="
+                        background: #4CAF50;
+                        color: white;
+                        border: none;
+                        padding: 5px 10px;
+                        border-radius: 3px;
+                        cursor: pointer;
+                        font-size: 12px;
+                    ">✏️ Редактировать</button>
+                    <button onclick="deleteProduct(${id})" style="
+                        background: #ff4444;
+                        color: white;
+                        border: none;
+                        padding: 5px 10px;
+                        border-radius: 3px;
+                        cursor: pointer;
+                        font-size: 12px;
+                    ">🗑️ Удалить</button>
+                </div>
             `;
 
             container.appendChild(productElement);
@@ -1144,6 +1536,7 @@
         if (confirm(`❌ Удалить товар "${products[productId].name}"?`)) {
             delete products[productId];
             saveProductsToStorage();
+            loadAdminStats();
             loadAdminProductsList();
             loadAllProducts(); // Обновляем основной список товаров
             alert("✅ Товар удален!");
@@ -1173,5 +1566,6 @@
         loadProductsFromStorage();
     });
 </script>
+
 </body>
-</html>
+</html>С
