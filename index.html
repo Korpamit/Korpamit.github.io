@@ -25,7 +25,17 @@
             text-align: center;
             animation: gradientShift 15s ease infinite;
         }
-        
+/* Плавный переход после хедера */
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(245, 245, 245, 0) 0%, #f5f5f5 100%);
+    pointer-events: none;
+}
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             33% { background-position: 100% 100%; }
@@ -44,38 +54,46 @@
             opacity: 0.9;
         }
 
-        .cart-icon {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #ffd700;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-            font-size: 1.5rem;
-        }
+.cart-icon {
+    position: fixed;
+    top: 15px;        /* В самый верх */
+    right: 15px;      /* В самый правый угол */
+    background: #ffd700;
+    border-radius: 50%;
+    width: 40px;      /* Уменьшили в 2 раза (было 60px) */
+    height: 40px;     /* Уменьшили в 2 раза (было 60px) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 1001;
+    font-size: 1rem;  /* Уменьшили шрифт */
+    transition: all 0.3s ease;
+}
 
-        .cart-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #ff4444;
-            color: white;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
+.cart-count {
+    position: absolute;
+    top: -3px;        /* Подкорректировали позицию */
+    right: -3px;      /* Подкорректировали позицию */
+    background: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 18px;      /* Уменьшили */
+    height: 18px;     /* Уменьшили */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem; /* Уменьшили шрифт */
+    font-weight: bold;
+}
+
+/* Красивая анимация при наведении на корзину */
+.cart-icon:hover {
+    transform: scale(1.15);
+    background: #ffc107;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
         
         .search-section {
             background: white;
@@ -141,14 +159,14 @@
             100% { left: 100%; }
         }
         
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
         
         .product-card {
             background: white;
@@ -156,6 +174,7 @@
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            position: relative;
         }
         
         .product-card:hover {
@@ -163,21 +182,21 @@
         }
         
         .product-image {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 1.1rem;
+            height: 300px;
             overflow: hidden;
+            position: relative;
         }
 
         .product-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: top center;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
         }
         
         .product-info {
@@ -381,6 +400,15 @@
             font-weight: bold;
             color: #2c5530;
         }
+.cart-item-image, .cart-item-info {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cart-item-image:hover, .cart-item-info:hover {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
 
         .remove-from-cart {
             background: #ff4444;
@@ -410,6 +438,7 @@
             cursor: pointer;
             margin-top: 1rem;
         }
+
         /* Стили для скидок */
         .discount-badge {
             background: linear-gradient(45deg, #ff4444, #ff6b6b);
@@ -439,6 +468,272 @@
             gap: 10px;
             flex-wrap: wrap;
         }
+
+        /* Иконка избранного */
+.favorite-icon {
+    position: fixed;
+    top: 70px;        /* Поднимаем выше */
+    right: 15px;
+    background: #ff4757;
+    border-radius: 50%;
+    width: 40px;      /* Уменьшаем */
+    height: 40px;     /* Уменьшаем */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
+    z-index: 1001;
+    font-size: 1rem;  /* Уменьшаем шрифт */
+    transition: all 0.3s ease;
+}
+
+        .favorite-icon:hover {
+            transform: scale(1.1);
+            background: #ff3742;
+        }
+
+.favorite-count {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    background: #000;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+        /* Панель избранного */
+        .favorite-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 999;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .favorite-sidebar.open {
+            right: 0;
+        }
+
+        .favorite-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 998;
+        }
+
+        .favorite-overlay.show {
+            display: block;
+        }
+
+.favorite-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 2px solid #eee;
+    background: linear-gradient(45deg, #fff5f5, #fff);
+}
+
+.favorite-header h3 {
+    color: #ff4757;
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+        .favorite-header button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Сердечко на карточке товара */
+        .favorite-heart {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .favorite-heart:hover {
+            transform: scale(1.1);
+        }
+
+        .favorite-heart.active {
+            color: #ff4757;
+            background: #fff;
+        }
+
+.favorite-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.favorite-item:hover {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0 -0.5rem;
+}
+
+.favorite-item-image {
+    width: 80px;
+    height: 80px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.favorite-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.favorite-item-info {
+    flex: 1;
+    min-width: 0; /* Для правильного переноса текста */
+}
+
+.favorite-item-info h4 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1rem;
+}
+
+.favorite-item-price {
+    font-weight: bold;
+    color: #2c5530;
+    margin-bottom: 0.5rem;
+}
+
+.remove-favorite {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.remove-favorite:hover {
+    background: #ff3742;
+}
+.favorite-item {
+    position: relative;
+}
+
+.favorite-item::after {
+    content: '👆 Нажми для просмотра';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.7rem;
+    opacity: 0;
+    transition: opacity 0.3s ease, top 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.favorite-item:hover::after {
+    opacity: 1;
+    top: -30px;
+}
+        /* Анимация Telegram иконки */
+        .telegram-link:hover .telegram-icon {
+            transform: translateY(-5px);
+        }
+        
+        .telegram-link:hover .telegram-icon img {
+            filter: drop-shadow(0 4px 15px rgba(0, 136, 204, 0.8));
+            animation: telegramFly 0.6s ease-in-out infinite alternate;
+        }
+        
+        @keyframes telegramFly {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-3px); }
+        }
+        
+        /* Эффект "пульсации" вокруг иконки */
+        .telegram-icon::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: radial-gradient(circle, rgba(0, 136, 204, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+            100% { transform: scale(1); opacity: 0.6; }
+        }
+        /* Взаимное расположение иконок при открытых панелях */
+.cart-sidebar.open ~ .favorite-icon {
+    top: 170px;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.favorite-sidebar.open ~ .cart-icon {
+    top: 170px;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+/* Возвращаем на место когда обе закрыты */
+.cart-icon, .favorite-icon {
+    transition: all 0.3s ease;
+}
     </style>
 </head>
 <body>
@@ -447,6 +742,37 @@
         🛒
         <div class="cart-count" id="cartCount">0</div>
     </div>
+
+    <!-- Иконка избранного -->
+    <div class="favorite-icon" onclick="toggleFavoritePanel()">
+        ❤️
+        <div class="favorite-count" id="favoriteCount">0</div>
+    </div>
+
+    <!-- Панель избранного -->
+<div class="favorite-sidebar" id="favoriteSidebar">
+    <div class="favorite-header">
+        <h3 style="margin: 0;">❤️ Избранное</h3>
+        <button onclick="toggleFavoritePanel()" style="
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            padding: 5px;
+        ">✕</button>
+    </div>
+    <div style="padding: 0 1rem;">
+        <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
+            💡 Нажмите на товар, чтобы перейти к его описанию
+        </p>
+    </div>
+    <div id="favoriteItems" style="padding: 0 1rem;">
+        <!-- Товары в избранном -->
+    </div>
+</div>
+
+    <div class="favorite-overlay" id="favoriteOverlay" onclick="toggleFavoritePanel()"></div>
 
     <!-- Оверлей для корзины -->
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
@@ -457,8 +783,27 @@
         <div id="cartItems">
             <!-- Товары в корзине -->
         </div>
-        <div class="cart-total" id="cartTotal">Итого: 0 руб</div>
+        <div class="cart-total" id="cartTotal">Итого: 0 р.</div>
         <button class="checkout-button" onclick="checkout()">Оформить заказ</button>
+    </div>
+
+    <!-- Уведомления БЕЗ галочки -->
+    <div id="notification" style="
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-100px);
+        background: #4CAF50;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 10000;
+        transition: transform 0.3s ease;
+        font-weight: bold;
+        opacity: 0;
+    ">
+        <span id="notificationText">Товар добавлен в корзину</span>
     </div>
 
     <header class="header">
@@ -466,21 +811,45 @@
         <p>Уникальная винтажная одежда с душой</p>
     </header>
 
-    <section class="search-section">
-        <h2>🔍 Поиск по артикулу</h2>
-        <p>Введите артикул товара (например: 1, 2, 3, 4)</p>
-        <div class="search-box">
-            <input type="number" id="articleInput" placeholder="Введите артикул..." min="1">
-            <button onclick="searchByArticle()">Найти товар</button>
-        </div>
-    </section>
-
-    <div class="category-buttons">
-        <button class="category-button active" onclick="filterCategory('all')">Все товары</button>
-        <button class="category-button" onclick="filterCategory('jackets')">🧥 Куртки</button>
-        <button class="category-button" onclick="filterCategory('jeans')">👖 Джинсы</button>
+<div class="category-buttons">
+    <button class="category-button active" onclick="goToCategory('all')">Все товары</button>
+    <button class="category-button" onclick="goToCategory('jackets')">🧥 Куртки</button>
+    <button class="category-button" onclick="goToCategory('jeans')">👖 Джинсы</button>
+</div>
+<section class="search-section">
+    <h2>🔍 Поиск товаров</h2>
+    
+    <!-- Поиск по артикулу -->
+    <p>Введите номер товара (например: 1, 2, 3, 4)</p>
+    <div class="search-box">
+        <input type="number" id="articleInput" placeholder="Введите номер товара..." min="1" oninput="searchByArticleLive()">
+        <button onclick="searchByArticle()">Найти по номеру</button>
     </div>
-
+    
+    <!-- Поиск по названию -->
+    <p style="margin-top: 1rem;">Или найдите по названию</p>
+    <div class="search-box">
+        <input type="text" id="searchByNameInput" placeholder="Введите название товара..." oninput="searchByNameLive()">
+        <button onclick="searchByName()">Найти по названию</button>
+    </div>
+</section>
+<!-- Сортировка -->
+<div style="text-align: center; margin: 1rem 0;">
+    <label for="sortSelect" style="font-weight: bold; margin-right: 10px;">Сортировка:</label>
+    <select id="sortSelect" onchange="sortProducts(this.value)" style="
+        padding: 8px 12px;
+        border: 2px solid #000;
+        border-radius: 5px;
+        font-size: 14px;
+        background: white;
+    ">
+        <option value="default">По умолчанию</option>
+        <option value="name_asc">По названию (А-Я)</option>
+        <option value="name_desc">По названию (Я-А)</option>
+        <option value="price_asc">По цене (сначала дешевые)</option>
+        <option value="price_desc">По цене (сначала дорогие)</option>
+    </select>
+</div>
     <section id="allProducts">
         <div class="products-grid" id="productsGrid">
             <!-- Товары будут загружены через JavaScript -->
@@ -500,118 +869,779 @@
         </div>
     </section>
 
-<script>
-        // База данных товаров (загружается из localStorage или создается по умолчанию)
-        let products = {};
+    <!-- Футер -->
+    <footer style="
+        background: linear-gradient(45deg, #000, #333);
+        color: white;
+        padding: 3rem 0;
+        margin-top: 4rem;
+        text-align: center;
+    ">
+        <div style="text-align: center;">
+            <h4 style="color: #ffd700; margin-bottom: 1rem;">💬 Telegram</h4>
+            <a href="https://t.me/KorpamitBot" 
+               style="text-decoration: none; display: inline-block;" 
+               class="telegram-link">
+                <div class="telegram-icon" style="
+                    width: 60px;
+                    height: 60px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 1rem;
+                    transition: all 0.5s ease;
+                    position: relative;
+                ">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" 
+                         alt="Telegram" 
+                         style="
+                             width: 30px;
+                             height: 30px;
+                             transition: all 0.5s ease;
+                             filter: drop-shadow(0 2px 8px rgba(0, 136, 204, 0.6));
+                         ">
+                </div>
+            </a>
+            <p style="color: #ccc;">Напишите нам в Telegram</p>
+        </div>
+                
+        <div style="text-align: center;">
+            <h4 style="color: #ffd700; margin-bottom: 1rem;">🕒 Время работы</h4>
+            <p style="color: #ccc;">Пн-Вс: 10:00 - 22:00</p>
+            <p style="color: #ccc;">Минск, доставка бесплатно</p>
+        </div>
+                
+        <div style="text-align: center;">
+            <h4 style="color: #ffd700; margin-bottom: 1rem;">💳 Оплата</h4>
+            <p style="color: #ccc;">Наличные при встрече</p>
+            <p style="color: #ccc;">Предоплата не требуется</p>
+        </div>
 
-        // Функция для инициализации товаров
-        function initializeProducts() {
-            const savedProducts = localStorage.getItem('vintageShopProducts');
+        <div style="border-top: 1px solid #444; padding-top: 2rem;">
+            <p style="color: #888; margin: 0;">© 2024 Vintage Shop. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Админ-панель (скрыта по умолчанию) -->
+    <div id="adminPanel" style="display: none;">
+        <div style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            padding: 2rem;
+            overflow-y: auto;
+        ">
+            <div style="
+                max-width: 900px;
+                margin: 2rem auto;
+                background: white;
+                border-radius: 15px;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="color: #333; margin: 0;">🛠️ Панель управления товарами</h2>
+                    <button onclick="hideAdminPanel()" style="
+                        background: #ff4444;
+                        color: white;
+                        border: none;
+                        padding: 10px 20px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-size: 16px;
+                    ">Закрыть</button>
+                </div>
+
+                <!-- Статистика -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 2rem;" id="adminStats">
+                    <!-- Статистика будет загружена через JavaScript -->
+                </div>
+<!-- Управление разделами -->
+<div style="background: #f0f8ff; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+    <h3 style="color: #333; margin-bottom: 1rem;">📁 Управление разделами</h3>
+    
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; margin-bottom: 1rem;">
+        <input type="text" id="newCategoryName" placeholder="Название нового раздела" style="
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        ">
+        <button onclick="addNewCategory()" style="
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        ">➕ Добавить раздел</button>
+    </div>
+    
+    <div id="categoriesList">
+        <!-- Список разделов будет здесь -->
+    </div>
+</div>
+
+<!-- Форма добавления товара -->
+<div style="background: #f9f9f9; padding: 2rem; border-radius: 10px; margin-bottom: 2rem;">
+    <h3 style="color: #333; margin-bottom: 1rem;">➕ Добавить новый товар</h3>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+        <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Название товара:</label>
+            <input type="text" id="adminProductName" style="
+                width: 100%;
+                padding: 10px;
+                border: 2px solid #ddd;
+                border-radius: 5px;
+                font-size: 16px;
+            " placeholder="Например: Куртка кожаная">
+        </div>
+        
+        <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Цена:</label>
             
-            if (savedProducts && Object.keys(JSON.parse(savedProducts)).length > 0) {
-                // Загружаем из localStorage
-                products = JSON.parse(savedProducts);
-            } else {
-                // Создаем стандартные товары только если в localStorage пусто
-                products = {
-                    1: {
-                        name: 'Куртка джинсовая 90-х',
-                        category: 'jackets',
-                        price: '80',
-                        oldPrice: null,
-                        size: 'M',
-                        condition: 'Хорошее',
-                        description: 'Винтажная джинсовая куртка в отличном состоянии. Идеально подходит для создания стильного образа.',
-                        image: 'Куртка джинсовая 90-х.jpg',
-                        hasDiscount: false
-                    },
-                    2: {
-                        name: 'Куртка кожаная 2000-х',
-                        category: 'jackets',
-                        price: '150',
-                        oldPrice: null,
-                        size: 'L',
-                        condition: 'Отличное',
-                        description: 'Качественная кожаная куртка. Стиль 2000-х годов в отличном состоянии.',
-                        image: 'Куртка кожаная 2000-х.jpg',
-                        hasDiscount: false
-                    },
-                    3: {
-                        name: 'Джинсы винтажные 90-х',
-                        category: 'jeans',
-                        price: '70',
-                        oldPrice: null,
-                        size: 'W32 L34',
-                        condition: 'Хорошее',
-                        description: 'Аутентичные джинсы 90-х годов. Уникальный винтажный крой.',
-                        image: 'Джинсы винтажные 90-х.jpg',
-                        hasDiscount: false
-                    },
-                    4: {
-                        name: 'Джинсы потертые 2010',
-                        category: 'jeans',
-                        price: '60',
-                        oldPrice: null,
-                        size: 'W30 L32',
-                        condition: 'Отличное',
-                        description: 'Стильные потертые джинсы. Модный distressed эффект.',
-                        image: 'Джинсы потертые 2010.jpg',
-                        hasDiscount: false
-                    },
-                    5: {
-                        name: 'Куртка ветровка 80-х',
-                        category: 'jackets',
-                        price: '90',
-                        oldPrice: null,
-                        size: 'L',
-                        condition: 'Удовлетворительное',
-                        description: 'Винтажная ветровка в стиле 80-х. Яркий цвет, отличное состояние.',
-                        image: 'Куртка ветровка 80-х.jpg',
-                        hasDiscount: false
-                    },
-                    6: {
-                        name: 'Джинсы клеш 70-х',
-                        category: 'jeans',
-                        price: '85',
-                        oldPrice: null,
-                        size: 'W31 L32',
-                        condition: 'Хорошее',
-                        description: 'Настоящие джинсы клеш эпохи диско. Уникальный предмет гардероба.',
-                        image: 'Джинсы клеш 70-х.jpg',
-                        hasDiscount: false
-                    },
-                    7: {
-                        name: 'Куртка байкерская',
-                        category: 'jackets',
-                        price: '200',
-                        oldPrice: null,
-                        size: 'XL',
-                        condition: 'Отличное',
-                        description: 'Настоящая байкерская куртка с металлической фурнитурой.',
-                        image: 'Куртка байкерская.jpg',
-                        hasDiscount: false
-                    },
-                    8: {
-                        name: 'Джинсы с вышивкой',
-                        category: 'jeans',
-                        price: '75',
-                        oldPrice: null,
-                        size: 'W30 L30',
-                        condition: 'Хорошее',
-                        description: 'Джинсы с уникальной ручной вышивкой. Эксклюзивный дизайн.',
-                        image: 'Джинсы с вышивкой.jpg',
-                        hasDiscount: false
-                    }
-                };
-                // Сохраняем стандартные товары в localStorage
-                saveProductsToStorage();
-            }
-        }
+            <!-- Цена со скидкой -->
+            <div style="margin-bottom: 8px;">
+                <label style="display: block; margin-bottom: 3px; font-size: 14px; color: #2e7d32; font-weight: bold;">
+                    ✅ Цена со скидкой (итоговая):
+                </label>
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <input type="text" id="adminProductPrice" style="
+                        flex: 1;
+                        padding: 10px;
+                        border: 2px solid #2e7d32;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        background: #f0f9f0;
+                    " placeholder="150" oninput="formatPrice(this)">
+                    <span style="color: #2e7d32; font-weight: bold;">BYN</span>
+                </div>
+            </div>
+            
+            <!-- Старая цена -->
+            <div style="margin-bottom: 8px;">
+                <label style="display: block; margin-bottom: 3px; font-size: 14px; color: #ff4444; font-weight: bold;">
+                    🏷️ Старая цена (без скидки):
+                </label>
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <input type="text" id="adminProductOldPrice" style="
+                        flex: 1;
+                        padding: 10px;
+                        border: 2px solid #ff4444;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        background: #fff5f5;
+                    " placeholder="200" oninput="formatPrice(this)">
+                    <span style="color: #ff4444; font-weight: bold;">BYN</span>
+                </div>
+                <div style="font-size: 12px; color: #666; margin-top: 3px;">
+                    💡 Оставьте пустым, если скидки нет
+                </div>
+            </div>
+            
+            <div id="discountCalculation" style="font-size: 12px; color: #666; margin-top: 5px;"></div>
+        </div>
+    </div>
 
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+        <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Категория:</label>
+            <select id="adminProductCategory" style="
+                width: 100%;
+                padding: 10px;
+                border: 2px solid #ddd;
+                border-radius: 5px;
+                font-size: 16px;
+            ">
+                <!-- Категории будут добавляться автоматически через JavaScript -->
+            </select>
+        </div>
+        
+        <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Размер:</label>
+            <input type="text" id="adminProductSize" style="
+                width: 100%;
+                padding: 10px;
+                border: 2px solid #ddd;
+                border-radius: 5px;
+                font-size: 16px;
+            " placeholder="Например: M, L, XL">
+        </div>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Описание:</label>
+        <textarea id="adminProductDescription" style="
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            height: 80px;
+            resize: vertical;
+        " placeholder="Подробное описание товара"></textarea>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Картинка товара:</label>
+        
+        <!-- Простое поле для ссылки -->
+        <input type="text" id="adminProductImage" style="
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        " placeholder="https://i.imgur.com/XXXXXXXXX.jpg" oninput="previewImageFromUrl(this.value)">
+        
+        <!-- Превью -->
+        <div id="imagePreview" style="margin-top: 10px; text-align: center;"></div>
+        
+        <!-- Инструкция для Imgur -->
+        <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 15px; margin-top: 10px;">
+            <h4 style="margin: 0 0 10px 0; color: #856404;">🎯 Как получить ссылку Imgur:</h4>
+            <ol style="margin: 0; padding-left: 20px; color: #856404;">
+                <li>Зайдите на <a href="https://imgur.com/upload" target="_blank" style="color: #1976d2;">Imgur.com/upload</a></li>
+                <li>Перетащите картинку в окно</li>
+                <li>После загрузки нажмите правой кнопкой на картинку → "Копировать адрес изображения"</li>
+                <li>Вставьте ссылку в поле выше</li>
+            </ol>
+            <div style="color: #856404; font-size: 12px; margin-top: 10px;">
+                💡 Ссылка должна выглядеть так: <code>https://i.imgur.com/XXXXXXX.jpg</code>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="addProductViaAdmin()" style="
+        background: #000;
+        color: #ffd700;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        width: 100%;
+    ">✅ Добавить товар</button>
+</div>
+
+<!-- Список товаров для управления -->
+<div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 style="color: #333; margin: 0;">📦 Управление товарами</h3>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <input type="text" id="adminSearchInput" placeholder="🔍 Поиск товаров..." style="
+                padding: 8px 12px;
+                border: 2px solid #ddd;
+                border-radius: 5px;
+                font-size: 14px;
+                width: 250px;
+            ">
+            <button onclick="clearAdminSearch()" style="
+                background: #666;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+            ">Очистить</button>
+        </div>
+    </div>
+    <div id="adminProductsList" style="
+        max-height: 500px;
+        overflow-y: auto;
+        border: 2px solid #eee;
+        border-radius: 10px;
+        padding: 1rem;
+    ">
+        <!-- Сюда будут добавляться товары -->
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+    // Глобальные переменные
+    let products = {};
     let currentPage = 1;
     const productsPerPage = 8;
     let currentCategory = 'all';
     let cart = [];
+    let favorites = [];
+    let editingProductId = null;
+    const ADMIN_PASSWORD = "1";
+
+    // Функция для инициализации товаров
+// Функция для инициализации товаров
+function initializeProducts() {
+    const savedProducts = localStorage.getItem('vintageShopProducts');
+    
+    if (savedProducts && Object.keys(JSON.parse(savedProducts)).length > 0) {
+        products = JSON.parse(savedProducts);
+        // Убедимся что у всех товаров есть простые номера
+        ensureSimpleNumbering();
+    } else {
+        // Создаем стандартные товары с простой нумерацией
+        products = {
+            1: {
+                name: 'Куртка джинсовая 90-х',
+                category: 'jackets',
+                price: '80',
+                oldPrice: null,
+                size: 'M',
+                description: 'Винтажная джинсовая куртка в отличном состоянии. Идеально подходит для создания стильного образа.',
+                image: 'Куртка джинсовая 90-х.jpg',
+                hasDiscount: false
+            },
+            2: {
+                name: 'Куртка кожаная 2000-х',
+                category: 'jackets',
+                price: '150',
+                oldPrice: null,
+                size: 'L',
+                description: 'Качественная кожаная куртка. Стиль 2000-х годов в отличном состоянии.',
+                image: 'Куртка кожаная 2000-х.jpg',
+                hasDiscount: false
+            },
+            3: {
+                name: 'Джинсы винтажные 90-х',
+                category: 'jeans',
+                price: '70',
+                oldPrice: null,
+                size: 'W32 L34',
+                description: 'Аутентичные джинсы 90-х годов. Уникальный винтажный крой.',
+                image: 'Джинсы винтажные 90-х.jpg',
+                hasDiscount: false
+            },
+            4: {
+                name: 'Джинсы потертые 2010',
+                category: 'jeans',
+                price: '60',
+                oldPrice: null,
+                size: 'W30 L32',
+                description: 'Стильные потертые джинсы. Модный distressed эффект.',
+                image: 'Джинсы потертые 2010.jpg',
+                hasDiscount: false
+            },
+            5: {
+                name: 'Куртка ветровка 80-х',
+                category: 'jackets',
+                price: '90',
+                oldPrice: null,
+                size: 'L',
+                description: 'Винтажная ветровка в стиле 80-х. Яркий цвет, отличное состояние.',
+                image: 'Куртка ветровка 80-х.jpg',
+                hasDiscount: false
+            },
+            6: {
+                name: 'Джинсы клеш 70-х',
+                category: 'jeans',
+                price: '85',
+                oldPrice: null,
+                size: 'W31 L32',
+                description: 'Настоящие джинсы клеш эпохи диско. Уникальный предмет гардероба.',
+                image: 'Джинсы клеш 70-х.jpg',
+                hasDiscount: false
+            },
+            7: {
+                name: 'Куртка байкерская',
+                category: 'jackets',
+                price: '200',
+                oldPrice: null,
+                size: 'XL',
+                description: 'Настоящая байкерская куртка с металлической фурнитурой.',
+                image: 'Куртка байкерская.jpg',
+                hasDiscount: false
+            },
+            8: {
+                name: 'Джинсы с вышивкой',
+                category: 'jeans',
+                price: '75 р.',
+                oldPrice: null,
+                size: 'W30 L30',
+                description: 'Джинсы с уникальной ручной вышивкой. Эксклюзивный дизайн.',
+                image: 'Джинсы с вышивкой.jpg',
+                hasDiscount: false
+            }
+        };
+        saveProductsToStorage();
+    }
+}
+// Функция для получения красивого номера товара
+function getNiceProductNumber() {
+    // Просто находим максимальный ID и +1
+    let maxId = 0;
+    Object.keys(products).forEach(id => {
+        const numId = parseInt(id);
+        if (numId > maxId && numId < 10000) { // Игнорируем очень большие числа
+            maxId = numId;
+        }
+    });
+    return maxId + 1;
+}
+function filterAdminProducts(searchTerm) {
+    const container = document.getElementById('adminProductsList');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const filteredProducts = Object.entries(products).filter(([id, product]) => {
+        const searchLower = searchTerm.toLowerCase();
+        return (
+            product.name.toLowerCase().includes(searchLower) ||
+            product.price.toLowerCase().includes(searchLower) ||
+            product.size.toLowerCase().includes(searchLower) ||
+            product.description.toLowerCase().includes(searchLower) ||
+            id.toString().includes(searchTerm)  // ← ИЩЕМ ПО ID (номеру товара)
+        );
+    });
+
+    if (filteredProducts.length === 0) {
+        container.innerHTML = '<div style="text-align: center; color: #666; padding: 2rem;">😞 Товары не найдены</div>';
+        return;
+    }
+
+    filteredProducts.forEach(([id, product]) => {
+        const productElement = document.createElement('div');
+        productElement.style.cssText = `
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            background: white;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+        `;
+
+        productElement.innerHTML = `
+            <div style="flex: 1;">
+                <strong>${product.name}</strong><br>
+                <small>№${id} | Цена: ${product.price} | Размер: ${product.size} | Категория: ${product.category === 'jackets' ? '🧥 Куртки' : '👖 Джинсы'}</small>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="editProduct(${id})" style="
+                    background: #4CAF50;
+                    color: white;
+                    border: none;
+                    padding: 5px 10px;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    font-size: 12px;
+                ">✏️ Редактировать</button>
+                <button onclick="deleteProduct(${id})" style="
+                    background: #ff4444;
+                    color: white;
+                    border: none;
+                    padding: 5px 10px;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    font-size: 12px;
+                ">🗑️ Удалить</button>
+            </div>
+        `;
+
+        container.appendChild(productElement);
+    });
+}
+
+// Функция для обеспечения простой нумерации товаров
+function ensureSimpleNumbering() {
+    let maxId = 0;
+    
+    // Находим максимальный существующий ID
+    Object.keys(products).forEach(id => {
+        const numId = parseInt(id);
+        if (numId > maxId) {
+            maxId = numId;
+        }
+    });
+ // Функция для получения следующего простого ID товара
+function getNextProductId() {
+    let maxId = 0;
+    Object.keys(products).forEach(id => {
+        const numId = parseInt(id);
+        if (numId > maxId) {
+            maxId = numId;
+        }
+    });
+    return maxId + 1;
+}   
+    // Если есть товары с длинными ID (от Date.now()), перенумеруем их
+    const needsRenumbering = Object.keys(products).some(id => id.length > 6);
+    
+    if (needsRenumbering) {
+        const newProducts = {};
+        let nextId = maxId + 1;
+        
+        Object.entries(products).forEach(([oldId, product]) => {
+            if (oldId.length <= 6) {
+                // Оставляем товары с короткими ID как есть
+                newProducts[oldId] = product;
+            } else {
+                // Перенумеровываем товары с длинными ID
+                newProducts[nextId] = product;
+                nextId++;
+            }
+        });
+        
+        products = newProducts;
+        saveProductsToStorage();
+    }
+}
+    // Функция для извлечения чисел из цены
+    function extractNumber(priceString) {
+        if (!priceString) return 0;
+        const number = parseFloat(priceString.toString().replace(/[^\d.]/g, ''));
+        return isNaN(number) ? 0 : number;
+    }
+// Функция для перевода всех товаров на простую нумерацию
+function convertToSimpleNumbers() {
+    const newProducts = {};
+    let nextId = 1;
+    
+    Object.values(products).forEach(product => {
+        newProducts[nextId] = product;
+        nextId++;
+    });
+    
+    products = newProducts;
+    saveProductsToStorage();
+    alert("✅ Все товары перенумерованы! Обнови страницу.");
+}
+// Функция для получения красивого номера товара
+function getNiceProductNumber() {
+    // Просто находим максимальный ID и +1
+    let maxId = 0;
+    Object.keys(products).forEach(id => {
+        const numId = parseInt(id);
+        if (numId > maxId && numId < 10000) { // Игнорируем очень большие числа
+            maxId = numId;
+        }
+    });
+    return maxId + 1;
+}
+    // Функции для избранного
+    function loadFavoritesFromStorage() {
+        const savedFavorites = localStorage.getItem('vintageShopFavorites');
+        if (savedFavorites) {
+            favorites = JSON.parse(savedFavorites);
+            updateFavorites();
+        }
+    }
+
+    function updateFavorites() {
+        const favoriteCount = document.getElementById('favoriteCount');
+        if (favoriteCount) {
+            favoriteCount.textContent = favorites.length;
+        }
+    }
+
+    function saveFavoritesToStorage() {
+        localStorage.setItem('vintageShopFavorites', JSON.stringify(favorites));
+    }
+
+function toggleFavorite(productId) {
+    const heart = event.target.closest('.favorite-heart');
+    
+    if (favorites.includes(productId)) {
+        favorites = favorites.filter(id => id !== productId);
+        if (heart) {
+            heart.classList.remove('active');
+            heart.innerHTML = '🤍';
+        }
+        // УВЕДОМЛЕНИЕ ПРИ УДАЛЕНИИ
+        showNotification('Товар удален из избранного', 'warning');
+    } else {
+        favorites.push(productId);
+        if (heart) {
+            heart.classList.add('active');
+            heart.innerHTML = '❤️';
+        }
+        // УВЕДОМЛЕНИЕ ПРИ ДОБАВЛЕНИИ
+        showNotification('Товар добавлен в избранное');
+    }
+    
+    updateFavorites();
+    saveFavoritesToStorage();
+    updateFavoriteItems();
+    updateFavoriteHearts();
+}
+
+function updateFavoriteHearts() {
+    // Обновляем сердечки на главной странице
+    document.querySelectorAll('.favorite-heart').forEach(heart => {
+        const productId = parseInt(heart.getAttribute('data-product-id'));
+        if (favorites.includes(productId)) {
+            heart.classList.add('active');
+            heart.innerHTML = '❤️';
+        } else {
+            heart.classList.remove('active');
+            heart.innerHTML = '🤍';
+        }
+    });
+    
+    // Обновляем сердечко на странице товара (если она открыта)
+    const productDetail = document.getElementById('productDetail');
+    if (productDetail) {
+        const productHeart = productDetail.querySelector('.favorite-heart');
+        if (productHeart) {
+            const productId = parseInt(productHeart.getAttribute('data-product-id'));
+            if (favorites.includes(productId)) {
+                productHeart.classList.add('active');
+                productHeart.innerHTML = '❤️';
+            } else {
+                productHeart.classList.remove('active');
+                productHeart.innerHTML = '🤍';
+            }
+        }
+    }
+}
+
+function updateFavoriteItems() {
+    const favoriteItems = document.getElementById('favoriteItems');
+    if (!favoriteItems) return;
+
+    favoriteItems.innerHTML = '';
+    
+    if (favorites.length === 0) {
+        favoriteItems.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">В избранном пока пусто ❤️</p>';
+        return;
+    }
+
+    favorites.forEach(productId => {
+        const product = products[productId];
+        if (product) {
+            const favoriteItem = document.createElement('div');
+            favoriteItem.className = 'favorite-item';
+            favoriteItem.onclick = function(event) {
+                // Проверяем, не кликнули ли мы на кнопку удаления
+                if (!event.target.classList.contains('remove-favorite')) {
+                    showProduct(productId);
+                    toggleFavoritePanel(); // Закрываем панель избранного
+                }
+            };
+            
+            favoriteItem.innerHTML = `
+                <div class="favorite-item-image" onclick="event.stopPropagation(); showProduct(${productId}); toggleFavoritePanel();">
+                    <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentNode.innerHTML='📷'">
+                </div>
+                <div class="favorite-item-info">
+                    <h4>${product.name}</h4>
+                    <div class="favorite-item-price">${product.price}</div>
+                    <div style="display: flex; gap: 10px; margin-top: 0.5rem;">
+                        <button class="remove-favorite" onclick="event.stopPropagation(); removeFromFavorites(${productId})">
+                            ❌ Удалить
+                        </button>
+                        <button class="cart-button" style="padding: 5px 10px; font-size: 12px;" onclick="event.stopPropagation(); addToCart(${productId});">
+                            🛒 В корзину
+                        </button>
+                    </div>
+                </div>
+            `;
+            favoriteItems.appendChild(favoriteItem);
+        }
+    });
+}
+
+    function removeFromFavorites(productId) {
+        favorites = favorites.filter(id => id !== productId);
+        updateFavorites();
+        saveFavoritesToStorage();
+        updateFavoriteItems();
+        updateFavoriteHearts();
+    }
+// Очистка избранного от несуществующих товаров
+function cleanupFavorites() {
+    favorites = favorites.filter(productId => products[productId]);
+    updateFavorites();
+    saveFavoritesToStorage();
+}
+// Переход к товару из корзины
+function showProductFromCart(productId) {
+    showProduct(productId);
+    toggleCart(); // Закрываем корзину
+}
+function editProduct(productId) {
+    const product = products[productId];
+    if (!product) return;
+    
+    // Извлекаем только числа из цен
+    const priceNumber = extractNumber(product.price);
+    const oldPriceNumber = product.oldPrice ? extractNumber(product.oldPrice) : '';
+    
+    // Заполняем форму данными товара
+    const nameInput = document.getElementById('adminProductName');
+    const priceInput = document.getElementById('adminProductPrice');
+    const oldPriceInput = document.getElementById('adminProductOldPrice');
+    const categoryInput = document.getElementById('adminProductCategory');
+    const sizeInput = document.getElementById('adminProductSize');
+    const descriptionInput = document.getElementById('adminProductDescription');
+    const imageInput = document.getElementById('adminProductImage');
+    
+    if (nameInput) nameInput.value = product.name;
+    if (priceInput) priceInput.value = priceNumber;
+    if (oldPriceInput) oldPriceInput.value = oldPriceNumber;
+    if (categoryInput) categoryInput.value = product.category;
+    if (sizeInput) sizeInput.value = product.size;
+    if (descriptionInput) descriptionInput.value = product.description;
+    if (imageInput) imageInput.value = product.image;
+    
+    editingProductId = productId;
+    
+    // Прокручиваем к форме
+    const formElement = document.querySelector('#adminPanel [id="adminProductName"]');
+    if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    alert("✏️ Редактируйте товар и нажмите 'Добавить товар' для сохранения");
+    
+    // Рассчитываем скидку при редактировании
+    setTimeout(() => {
+        calculateDiscountForInputs(priceNumber, oldPriceNumber);
+    }, 100);
+}
+// Очистка избранного от несуществующих товаров
+function cleanupFavorites() {
+    favorites = favorites.filter(productId => products[productId]);
+    updateFavorites();
+    saveFavoritesToStorage();
+}
+// Переход к товару из корзины
+function showProductFromCart(productId) {
+    showProduct(productId);
+    toggleCart(); // Закрываем корзину
+}
+function toggleFavoritePanel() {
+    const sidebar = document.getElementById('favoriteSidebar');
+    const overlay = document.getElementById('favoriteOverlay');
+    
+    if (sidebar && overlay) {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('show');
+        updateFavoriteItems();
+    }
+}
+
+function toggleCart() {
+    const sidebar = document.getElementById('cartSidebar');
+    const overlay = document.getElementById('cartOverlay');
+    
+    if (sidebar && overlay) {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('show');
+    }
+}
 
     // Загрузка всех товаров
     function loadAllProducts(page = 1, category = 'all') {
@@ -619,6 +1649,8 @@
         currentCategory = category;
         
         const grid = document.getElementById('productsGrid');
+        if (!grid) return;
+
         grid.innerHTML = '';
 
         // Фильтрация по категории
@@ -636,49 +1668,51 @@
         document.querySelectorAll('.category-button').forEach(btn => {
             btn.classList.remove('active');
         });
-        document.querySelector(`.category-button[onclick="filterCategory('${category}')"]`).classList.add('active');
+        const activeButton = document.querySelector(`.category-button[onclick="filterCategory('${category}')"]`);
+        if (activeButton) {
+            activeButton.classList.add('active');
+        }
 
-            // Отображение товаров
-            paginatedProducts.forEach(([article, product]) => {
-                const productCard = `
-                    <div class="product-card" onclick="showProduct(${article})" style="cursor: pointer;">
-                        <div class="product-image">
-                            <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentNode.innerHTML='📷 ${product.name}'">
-                        </div>
-                        <div class="product-info">
-                            <span class="product-article">Артикул: ${article}</span>
-                            <h3>${product.name}</h3>
-                            <div class="product-price">
-                                ${product.oldPrice && product.hasDiscount ? `
-                                    <div class="price-container">
-                                        <div style="display: flex; flex-direction: column;">
-                                            <span class="old-price">${product.oldPrice}</span>
-                                            <span class="new-price">${product.price}</span>
-                                        </div>
-                                        <span class="discount-badge">
-                                            -${Math.round((1 - extractNumber(product.price) / extractNumber(product.oldPrice)) * 100)}%
-                                        </span>
+        // Отображение товаров
+        paginatedProducts.forEach(([article, product]) => {
+            const productCard = `
+                <div class="product-card" onclick="showProduct(${article})" style="cursor: pointer;">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentNode.innerHTML='📷 ${product.name}'">
+                        <div class="favorite-heart" data-product-id="${article}" onclick="event.stopPropagation(); toggleFavorite(${article})">🤍</div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-article">№${article}</span>
+                        <h3>${product.name}</h3>
+                        <div class="product-price">
+                            ${product.oldPrice && product.hasDiscount ? `
+                                <div class="price-container">
+                                    <div style="display: flex; flex-direction: column;">
+                                        <span class="old-price">${product.oldPrice}</span>
+                                        <span class="new-price">${product.price}</span>
                                     </div>
-                                ` : `
-                                    <span>${product.price}</span>
-                                `}
-                            </div>
-                            <p><strong>Размер:</strong> ${product.size}</p>
-                            <p><strong>Состояние:</strong> ${product.condition}</p>
-                            <p class="product-description">${product.description}</p>
-                            <div class="product-actions">
-                                <button class="cart-button" onclick="event.stopPropagation(); addToCart(${article})">
-                                    🛒 В корзину
-                                </button>
-                                <button class="buy-button" onclick="event.stopPropagation(); reserveProduct(${article})">
-                                    💬 Забронировать
-                                </button>
-                            </div>
+                                    <span class="discount-badge">
+                                        -${Math.round((1 - extractNumber(product.price) / extractNumber(product.oldPrice)) * 100)}%
+                                    </span>
+                                </div>
+                            ` : `
+                                <span>${product.price}</span>
+                            `}
+                        </div>
+                        <p><strong>Размер:</strong> ${product.size}</p>
+                        <div class="product-actions">
+                            <button class="cart-button" onclick="event.stopPropagation(); addToCart(${article})">
+                                🛒 В корзину
+                            </button>
                         </div>
                     </div>
-                `;
-                grid.innerHTML += productCard;
-            });
+                </div>
+            `;
+            grid.innerHTML += productCard;
+        });
+
+        // Обновляем сердечки избранного
+        updateFavoriteHearts();
 
         // Пагинация
         updatePagination(filteredProducts.length, page, category);
@@ -688,6 +1722,8 @@
     function updatePagination(totalProducts, currentPage, category) {
         const totalPages = Math.ceil(totalProducts / productsPerPage);
         const paginationDiv = document.getElementById('pagination');
+        if (!paginationDiv) return;
+
         paginationDiv.innerHTML = '';
 
         for (let i = 1; i <= totalPages; i++) {
@@ -702,24 +1738,30 @@
     // Корзина
     function addToCart(productId) {
         const product = products[productId];
+        if (!product) return;
+
         cart.push({
             id: productId,
             ...product
         });
         updateCart();
-        alert(`"${product.name}" добавлен в корзину!`);
+        showNotification('✓ Товар добавлен в корзину');
     }
 
     function removeFromCart(index) {
         cart.splice(index, 1);
         updateCart();
+        showNotification('Товар удален из корзины', 'warning');
     }
+    
 
     function updateCart() {
         const cartCount = document.getElementById('cartCount');
         const cartItems = document.getElementById('cartItems');
         const cartTotal = document.getElementById('cartTotal');
         
+        if (!cartCount || !cartItems || !cartTotal) return;
+
         // Обновляем счетчик
         cartCount.textContent = cart.length;
         
@@ -728,35 +1770,37 @@
         let total = 0;
         
         cart.forEach((item, index) => {
-            const price = parseInt(item.price);
+            const price = extractNumber(item.price);
             total += price;
             
             const cartItem = document.createElement('div');
             cartItem.className = 'cart-item';
-            cartItem.innerHTML = `
-                <div class="cart-item-image">
-                    <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'; this.parentNode.innerHTML='📷'">
-                </div>
-                <div class="cart-item-info">
-                    <h4>${item.name}</h4>
-                    <div class="cart-item-price">${item.price}</div>
-                </div>
-                <button class="remove-from-cart" onclick="removeFromCart(${index})">❌</button>
-            `;
+cartItem.innerHTML = `
+    <div class="cart-item-image" onclick="showProductFromCart(${item.id})">
+        <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'; this.parentNode.innerHTML='📷'">
+    </div>
+    <div class="cart-item-info" onclick="showProductFromCart(${item.id})">
+        <h4>${item.name}</h4>
+        <div class="cart-item-price">${item.price}</div>
+    </div>
+    <button class="remove-from-cart" onclick="removeFromCart(${index})">❌</button>
+`;
             cartItems.appendChild(cartItem);
         });
         
         // Обновляем итоговую сумму
-        cartTotal.textContent = `Итого: ${total} руб`;
+        cartTotal.textContent = `Итого: ${total} BYN`;
     }
 
     function toggleCart() {
-        const sidebar = document.getElementById('cartSidebar');
-        const overlay = document.getElementById('cartOverlay');
-        
+    const sidebar = document.getElementById('cartSidebar');
+    const overlay = document.getElementById('cartOverlay');
+    
+    if (sidebar && overlay) {
         sidebar.classList.toggle('open');
         overlay.classList.toggle('show');
     }
+}
 
     function checkout() {
         if (cart.length === 0) {
@@ -764,15 +1808,19 @@
             return;
         }
         
-        const total = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
+        const total = cart.reduce((sum, item) => sum + extractNumber(item.price), 0);
         const itemList = cart.map(item => `• ${item.name} - ${item.price}`).join('\n');
         
-        alert(`Заказ оформлен!\n\nТовары:\n${itemList}\n\nОбщая сумма: ${total} руб\n\nСвяжитесь с нами в Telegram для уточнения деталей!`);
+        alert(`Заказ оформлен!\n\nТовары:\n${itemList}\n\nОбщая сумма: ${total} BYN\n\nСвяжитесь с нами в Telegram для уточнения деталей!`);
         
         // Очищаем корзину
         cart = [];
         updateCart();
         toggleCart();
+    }
+
+    function saveProductsToStorage() {
+        localStorage.setItem('vintageShopProducts', JSON.stringify(products));
     }
 
     // Фильтрация по категории
@@ -782,32 +1830,174 @@
 
     // Поиск по артикулу
     function searchByArticle() {
-        const article = document.getElementById('articleInput').value;
+        const articleInput = document.getElementById('articleInput');
+        if (!articleInput) return;
+
+        const article = articleInput.value;
         if (article && products[article]) {
             showProduct(article);
         } else {
             alert('Товар с таким артикулом не найден!');
         }
     }
+// Поиск по названию
+function searchByName() {
+    const searchTerm = document.getElementById('searchByNameInput').value.toLowerCase().trim();
+    
+    if (!searchTerm) {
+        alert('Введите название для поиска!');
+        return;
+    }
+    
+    // Ищем товары по названию
+    const foundProducts = Object.entries(products).filter(([id, product]) => 
+        product.name.toLowerCase().includes(searchTerm)
+    );
+    
+    if (foundProducts.length > 0) {
+        // Показываем найденные товары
+        showSearchResults(foundProducts, `Результаты поиска: "${searchTerm}"`);
+    } else {
+        alert('Товары по вашему запросу не найдены!');
+    }
+}
 
-    // Показать детальную страницу товара
+// Показать результаты поиска
+function showSearchResults(productsList, title) {
+    const grid = document.getElementById('productsGrid');
+    const pagination = document.getElementById('pagination');
+    
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    pagination.innerHTML = '';
+    
+    // Заголовок результатов
+    const resultsTitle = document.createElement('h3');
+    resultsTitle.textContent = title;
+    resultsTitle.style.textAlign = 'center';
+    resultsTitle.style.marginBottom = '2rem';
+    resultsTitle.style.color = '#333';
+    grid.parentNode.insertBefore(resultsTitle, grid);
+    
+    // Кнопка "Назад"
+    const backButton = document.createElement('button');
+    backButton.textContent = '← Назад ко всем товарам';
+    backButton.className = 'back-button';
+    backButton.style.margin = '0 auto 2rem auto';
+    backButton.style.display = 'block';
+    backButton.onclick = () => {
+        loadAllProducts();
+        resultsTitle.remove();
+        backButton.remove();
+    };
+    grid.parentNode.insertBefore(backButton, grid);
+    
+    // Отображаем найденные товары
+    productsList.forEach(([article, product]) => {
+        const productCard = `
+            <div class="product-card" onclick="showProduct(${article})" style="cursor: pointer;">
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentNode.innerHTML='📷 ${product.name}'">
+                    <div class="favorite-heart" data-product-id="${article}" onclick="event.stopPropagation(); toggleFavorite(${article})">🤍</div>
+                </div>
+                <div class="product-info">
+                    <span class="product-article">№${article}</span>
+                    <h3>${product.name}</h3>
+                    <div class="product-price">${product.price}</div>
+                    <p><strong>Размер:</strong> ${product.size}</p>
+                    <p><strong>Состояние:</strong> ${product.condition}</p>
+                    <div class="product-actions">
+                        <button class="cart-button" onclick="event.stopPropagation(); addToCart(${article})">
+                            🛒 В корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        grid.innerHTML += productCard;
+    });
+    
+    updateFavoriteHearts();
+}
+// Живой поиск по номеру товара
+function searchByArticleLive() {
+    const article = document.getElementById('articleInput').value;
+    if (article && products[article]) {
+        showProduct(article);
+    }
+}
+
+// Живой поиск по названию
+function searchByNameLive() {
+    const searchTerm = document.getElementById('searchByNameInput').value.toLowerCase().trim();
+    
+    if (searchTerm.length < 2) {
+        // Если меньше 2 символов - показываем все товары
+        if (searchTerm.length === 0) {
+            loadAllProducts();
+        }
+        return;
+    }
+    
+    // Ищем товары по названию
+    const foundProducts = Object.entries(products).filter(([id, product]) => 
+        product.name.toLowerCase().includes(searchTerm)
+    );
+    
+    if (foundProducts.length > 0) {
+        showSearchResults(foundProducts, `Результаты поиска: "${searchTerm}"`);
+    } else {
+        // Если ничего не найдено, показываем сообщение
+        const grid = document.getElementById('productsGrid');
+        const pagination = document.getElementById('pagination');
+        if (grid && pagination) {
+            grid.innerHTML = '<div style="text-align: center; padding: 3rem; color: #666;">😞 Товары не найдены</div>';
+            pagination.innerHTML = '';
+        }
+    }
+}
     // Показать детальную страницу товара
     function showProduct(article) {
         const product = products[article];
+        if (!product) return;
         
-        document.getElementById('allProducts').classList.add('hidden');
-        document.getElementById('singleProduct').classList.remove('hidden');
-        
+        const allProducts = document.getElementById('allProducts');
+        const singleProduct = document.getElementById('singleProduct');
         const productDetail = document.getElementById('productDetail');
-        productDetail.innerHTML = `
-            <div class="product-card" style="max-width: 800px; margin: 0 auto;">
-                <div class="product-image" style="height: 500px; background: #f8f8f8; display: flex; align-items: center; justify-content: center;">
-                    <img src="${product.image}" alt="${product.name}" 
-                         style="max-width: 100%; max-height: 100%; object-fit: contain;"
-                         onerror="this.style.display='none'; this.parentNode.innerHTML='📷 ${product.name}'">
-                </div>
+        
+        if (!allProducts || !singleProduct || !productDetail) return;
+
+        allProducts.classList.add('hidden');
+        singleProduct.classList.remove('hidden');
+        
+productDetail.innerHTML = `
+    <div class="product-card" style="max-width: 800px; margin: 0 auto;">
+        <div class="product-image" style="height: 500px; background: #f8f8f8; display: flex; align-items: center; justify-content: center; position: relative;">
+            <img src="${product.image}" alt="${product.name}" 
+                 style="max-width: 100%; max-height: 100%; object-fit: contain;"
+                 onerror="this.style.display='none'; this.parentNode.innerHTML='📷 ${product.name}'">
+            <div class="favorite-heart" data-product-id="${article}" onclick="toggleFavorite(${article})" style="
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: white;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 1.5rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 10;
+            ">
+                ${favorites.includes(parseInt(article)) ? '❤️' : '🤍'}
+            </div>
+        </div>
                 <div class="product-info">
-                    <span class="product-article">Артикул: ${article}</span>
+                    <span class="product-article">№${article}</span>
                     <h2>${product.name}</h2>
                     <div class="product-price" style="font-size: 1.8rem;">
                         ${product.oldPrice && product.hasDiscount ? `
@@ -829,20 +2019,17 @@
                         <div>
                             <strong>📏 Размер:</strong>
                             <div style="margin-top: 0.5rem;">
-                                <button class="size-btn active" style="
-                                    background: #000;
-                                    color: #ffd700;
-                                    border: none;
-                                    padding: 8px 16px;
-                                    border-radius: 5px;
-                                    font-weight: bold;
-                                ">${product.size}</button>
+<button class="size-btn active" style="
+    background: #ffd700;
+    color: #333;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: bold;
+">${product.size}</button>
                             </div>
                         </div>
                         <div>
-                            <strong>⭐ Состояние:</strong>
-                            <p>${product.condition}</p>
-                        </div>
                     </div>
                     
                     <div style="margin: 1rem 0;">
@@ -854,25 +2041,24 @@
                         <button class="cart-button" onclick="addToCart(${article})">
                             🛒 Добавить в корзину
                         </button>
-                        <button class="buy-button" onclick="reserveProduct(${article})">
-                            💬 Забронировать сейчас
-                        </button>
                     </div>
                 </div>
             </div>
         `;
     }
-    // Показать все товары
-    function showAllProducts() {
-        document.getElementById('allProducts').classList.remove('hidden');
-        document.getElementById('singleProduct').classList.add('hidden');
-    }
 
-    // Бронирование товара
-    function reserveProduct(article) {
-        const product = products[article];
-        alert(`Товар "${product.name}" зарезервирован!\n\nСвяжитесь с нами в Telegram для уточнения деталей.`);
+// Показать все товары
+function showAllProducts() {
+    const allProducts = document.getElementById('allProducts');
+    const singleProduct = document.getElementById('singleProduct');
+    
+    if (allProducts && singleProduct) {
+        allProducts.classList.remove('hidden');
+        singleProduct.classList.add('hidden');
+        // ОБНОВЛЯЕМ сердечки при возврате на главную
+        updateFavoriteHearts();
     }
+}
 
     // Обработка URL параметров
     function checkUrlParams() {
@@ -883,321 +2069,6 @@
         }
     }
 
-    // Инициализация
-    document.addEventListener('DOMContentLoaded', function() {
-        loadAllProducts();
-        checkUrlParams();
-        
-        document.getElementById('articleInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchByArticle();
-            }
-        });
-    });
-</script>
- <!-- Футер -->
-<footer style="
-    background: linear-gradient(45deg, #000, #333);
-    color: white;
-    padding: 3rem 0;
-    margin-top: 4rem;
-    text-align: center;
-">
-<div style="text-align: center;">
-    <h4 style="color: #ffd700; margin-bottom: 1rem;">💬 Telegram</h4>
-    <a href="https://t.me/KorpamitBot" 
-       style="text-decoration: none; display: inline-block;" 
-       class="telegram-link">
-        <div class="telegram-icon" style="
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            transition: all 0.5s ease;
-            position: relative;
-        ">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" 
-                 alt="Telegram" 
-                 style="
-                     width: 30px;
-                     height: 30px;
-                     transition: all 0.5s ease;
-                     filter: drop-shadow(0 2px 8px rgba(0, 136, 204, 0.6));
-                 ">
-        </div>
-    </a>
-    <p style="color: #ccc;">Напишите нам в Telegram</p>
-</div>
-            
-            <div style="text-align: center;">
-                <h4 style="color: #ffd700; margin-bottom: 1rem;">🕒 Время работы</h4>
-                <p style="color: #ccc;">Пн-Вс: 10:00 - 22:00</p>
-                <p style="color: #ccc;">Минск, доставка бесплатно</p>
-            </div>
-            
-            <div style="text-align: center;">
-                <h4 style="color: #ffd700; margin-bottom: 1rem;">💳 Оплата</h4>
-                <p style="color: #ccc;">Наличные при встрече</p>
-                <p style="color: #ccc;">Предоплата не требуется</p>
-            </div>
-        </div>
-        
-        <div style="border-top: 1px solid #444; padding-top: 2rem;">
-            <p style="color: #888; margin: 0;">© 2024 Vintage Shop. Все права защищены.</p>
-        </div>
-    </div>
-</footer>
-
-<style>
-    /* Анимация Telegram иконки */
-    .telegram-link:hover .telegram-icon {
-        transform: translateY(-5px);
-    }
-    
-    .telegram-link:hover .telegram-icon img {
-        filter: drop-shadow(0 4px 15px rgba(0, 136, 204, 0.8));
-        animation: telegramFly 0.6s ease-in-out infinite alternate;
-    }
-    
-    @keyframes telegramFly {
-        0% {
-            transform: translateY(0);
-        }
-        100% {
-            transform: translateY(-3px);
-        }
-    }
-    
-    /* Эффект "пульсации" вокруг иконки */
-    .telegram-icon::before {
-        content: '';
-        position: absolute;
-        top: -8px;
-        left: -8px;
-        right: -8px;
-        bottom: -8px;
-        background: radial-gradient(circle, rgba(0, 136, 204, 0.4) 0%, transparent 70%);
-        border-radius: 50%;
-        animation: pulse 2s infinite;
-        z-index: -1;
-    }
-    
-    @keyframes pulse {
-        0% {
-            transform: scale(1);
-            opacity: 0.6;
-        }
-        50% {
-            transform: scale(1.1);
-            opacity: 0.3;
-        }
-        100% {
-            transform: scale(1);
-            opacity: 0.6;
-        }
-    }
-</style>
-<!-- Админ-панель (скрыта по умолчанию) -->
-<div id="adminPanel" style="display: none;">
-    <div style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.9);
-        z-index: 10000;
-        padding: 2rem;
-        overflow-y: auto;
-    ">
-        <div style="
-            max-width: 900px;
-            margin: 2rem auto;
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        ">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <h2 style="color: #333; margin: 0;">🛠️ Панель управления товарами</h2>
-                <button onclick="hideAdminPanel()" style="
-                    background: #ff4444;
-                    color: white;
-                    border: none;
-                    padding: 10px 20px;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    font-size: 16px;
-                ">Закрыть</button>
-            </div>
-
-            <!-- Статистика -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 2rem;" id="adminStats">
-                <!-- Статистика будет загружена через JavaScript -->
-            </div>
-
-            <!-- Форма добавления товара -->
-            <div style="background: #f9f9f9; padding: 2rem; border-radius: 10px; margin-bottom: 2rem;">
-                <h3 style="color: #333; margin-bottom: 1rem;">➕ Добавить новый товар</h3>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                    <div>
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Название товара:</label>
-                        <input type="text" id="adminProductName" style="
-                            width: 100%;
-                            padding: 10px;
-                            border: 2px solid #ddd;
-                            border-radius: 5px;
-                            font-size: 16px;
-                        " placeholder="Например: Куртка кожаная">
-                    </div>
-                    
-                    <div>
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Цена:</label>
-                        <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px;">
-                            <input type="text" id="adminProductPrice" style="
-                                flex: 1;
-                                padding: 10px;
-                                border: 2px solid #ddd;
-                                border-radius: 5px;
-                                font-size: 16px;
-                            " placeholder="150" oninput="formatPrice(this)">
-                            <span style="color: #666; font-weight: bold;">руб</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <input type="text" id="adminProductOldPrice" style="
-                                flex: 1;
-                                padding: 10px;
-                                border: 2px solid #ff4444;
-                                border-radius: 5px;
-                                font-size: 16px;
-                                background: #fff5f5;
-                            " placeholder="200" oninput="formatPrice(this)">
-                            <span style="color: #666; font-weight: bold;">руб</span>
-                        </div>
-                        <div id="discountCalculation" style="font-size: 12px; color: #666; margin-top: 5px;"></div>
-                    </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                    <div>
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Категория:</label>
-                        <select id="adminProductCategory" style="
-                            width: 100%;
-                            padding: 10px;
-                            border: 2px solid #ddd;
-                            border-radius: 5px;
-                            font-size: 16px;
-                        ">
-                            <option value="jackets">🧥 Куртки</option>
-                            <option value="jeans">👖 Джинсы</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Размер:</label>
-                        <input type="text" id="adminProductSize" style="
-                            width: 100%;
-                            padding: 10px;
-                            border: 2px solid #ddd;
-                            border-radius: 5px;
-                            font-size: 16px;
-                        " placeholder="Например: M, L, XL">
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 1rem;">
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Состояние:</label>
-                    <input type="text" id="adminProductCondition" style="
-                        width: 100%;
-                        padding: 10px;
-                        border: 2px solid #ddd;
-                        border-radius: 5px;
-                        font-size: 16px;
-                    " placeholder="Например: Отличное, Хорошее">
-                </div>
-
-                <div style="margin-bottom: 1rem;">
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Описание:</label>
-                    <textarea id="adminProductDescription" style="
-                        width: 100%;
-                        padding: 10px;
-                        border: 2px solid #ddd;
-                        border-radius: 5px;
-                        font-size: 16px;
-                        height: 80px;
-                        resize: vertical;
-                    " placeholder="Подробное описание товара"></textarea>
-                </div>
-
-                <div style="margin-bottom: 1rem;">
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Ссылка на картинку:</label>
-                    <input type="text" id="adminProductImage" style="
-                        width: 100%;
-                        padding: 10px;
-                        border: 2px solid #ddd;
-                        border-radius: 5px;
-                        font-size: 16px;
-                    " placeholder="https://example.com/photo.jpg">
-                </div>
-
-                <button onclick="addProductViaAdmin()" style="
-                    background: #000;
-                    color: #ffd700;
-                    border: none;
-                    padding: 12px 30px;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    font-size: 16px;
-                    font-weight: bold;
-                    width: 100%;
-                ">✅ Добавить товар</button>
-            </div>
-
-            <!-- Список товаров для управления -->
-            <div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h3 style="color: #333; margin: 0;">📦 Управление товарами</h3>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <input type="text" id="adminSearchInput" placeholder="🔍 Поиск товаров..." style="
-                            padding: 8px 12px;
-                            border: 2px solid #ddd;
-                            border-radius: 5px;
-                            font-size: 14px;
-                            width: 250px;
-                        ">
-                        <button onclick="clearAdminSearch()" style="
-                            background: #666;
-                            color: white;
-                            border: none;
-                            padding: 8px 12px;
-                            border-radius: 5px;
-                            cursor: pointer;
-                            font-size: 14px;
-                        ">Очистить</button>
-                    </div>
-                </div>
-                <div id="adminProductsList" style="
-                    max-height: 500px;
-                    overflow-y: auto;
-                    border: 2px solid #eee;
-                    border-radius: 10px;
-                    padding: 1rem;
-                ">
-                    <!-- Сюда будут добавляться товары -->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Пароль админки (МОЖНО ПОМЕНЯТЬ)
-    const ADMIN_PASSWORD = "vintage2024";
-
-    let editingProductId = null;
-
     // Функции админ-панели
     function showAdminPanel() {
         const password = prompt("🔐 Введите пароль админ-панели:");
@@ -1206,7 +2077,7 @@
             loadAdminStats();
             loadAdminProductsList();
             setupAdminSearch();
-            setupDiscountCalculator(); 
+            setupDiscountCalculator();
         } else if (password) {
             alert("❌ Неверный пароль!");
         }
@@ -1217,151 +2088,189 @@
         editingProductId = null;
         resetAddForm();
     }
+// Функция для перехода к категории со страницы товара
+function goToCategory(category) {
+    showAllProducts(); // Сначала возвращаемся на главную
+    setTimeout(() => {
+        filterCategory(category); // Потом фильтруем по категории
+    }, 100);
+}
 
-    function loadAdminStats() {
-        const statsContainer = document.getElementById('adminStats');
-        const totalProducts = Object.keys(products).length;
-        const jacketsCount = Object.values(products).filter(p => p.category === 'jackets').length;
-        const jeansCount = Object.values(products).filter(p => p.category === 'jeans').length;
-        
-        statsContainer.innerHTML = `
-            <div style="background: #e3f2fd; padding: 1rem; border-radius: 10px; text-align: center;">
-                <div style="font-size: 2rem; font-weight: bold; color: #1976d2;">${totalProducts}</div>
-                <div style="color: #333;">Всего товаров</div>
-            </div>
-            <div style="background: #e8f5e8; padding: 1rem; border-radius: 10px; text-align: center;">
-                <div style="font-size: 2rem; font-weight: bold; color: #2e7d32;">${jacketsCount}</div>
-                <div style="color: #333;">Куртки</div>
-            </div>
-            <div style="background: #fff3e0; padding: 1rem; border-radius: 10px; text-align: center;">
-                <div style="font-size: 2rem; font-weight: bold; color: #f57c00;">${jeansCount}</div>
-                <div style="color: #333;">Джинсы</div>
-            </div>
-        `;
+// Сортировка товаров
+function sortProducts(sortType) {
+    let sortedProducts = Object.entries(products);
+    
+    switch(sortType) {
+        case 'name_asc':
+            sortedProducts.sort((a, b) => a[1].name.localeCompare(b[1].name));
+            break;
+        case 'name_desc':
+            sortedProducts.sort((a, b) => b[1].name.localeCompare(a[1].name));
+            break;
+        case 'price_asc':
+            sortedProducts.sort((a, b) => extractNumber(a[1].price) - extractNumber(b[1].price));
+            break;
+        case 'price_desc':
+            sortedProducts.sort((a, b) => extractNumber(b[1].price) - extractNumber(a[1].price));
+            break;
+        default:
+            // По умолчанию - без сортировки
+            break;
     }
-    // Обработка скидок
+    
+    // Показываем отсортированные товары
+    showSortedResults(sortedProducts);
+}
+
+// Показать отсортированные товары
+function showSortedResults(sortedProducts) {
+    const grid = document.getElementById('productsGrid');
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    
+    sortedProducts.forEach(([article, product]) => {
+const productCard = `
+    <div class="product-card" onclick="showProduct(${article})" style="cursor: pointer;">
+        <div class="product-image">
+            <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentNode.innerHTML='📷 ${product.name}'">
+            <div class="favorite-heart" data-product-id="${article}" onclick="event.stopPropagation(); toggleFavorite(${article})">🤍</div>
+        </div>
+        <div class="product-info">
+            <span class="product-article">№${article}</span>
+            <h3>${product.name}</h3>
+            <div class="product-price">${product.price}</div>
+            <p><strong>Размер:</strong> ${product.size}</p>
+            <div class="product-actions">
+                <button class="cart-button" onclick="event.stopPropagation(); addToCart(${article})">
+                    🛒 В корзину
+                </button>
+            </div>
+        </div>
+    </div>
+`;
+        grid.innerHTML += productCard;
+    });
+    
+    updateFavoriteHearts();
+}
+
+function loadAdminStats() {
+    const statsContainer = document.getElementById('adminStats');
+    if (!statsContainer) return;
+
+    const totalProducts = Object.keys(products).length;
+    
+    statsContainer.innerHTML = `
+        <div style="background: #e3f2fd; padding: 1rem; border-radius: 10px; text-align: center; grid-column: 1 / -1;">
+            <div style="font-size: 2rem; font-weight: bold; color: #1976d2;">${totalProducts}</div>
+            <div style="color: #333;">Всего товаров</div>
+        </div>
+    `;
+}
+
     function setupDiscountCalculator() {
         const priceInput = document.getElementById('adminProductPrice');
         const oldPriceInput = document.getElementById('adminProductOldPrice');
-        const discountElement = document.getElementById('discountCalculation');
         
         function calculateDiscount() {
-            const price = parseInt(priceInput.value) || 0;
-            const oldPrice = parseInt(oldPriceInput.value) || 0;
-            
-            if (oldPrice > 0 && price > 0 && oldPrice > price) {
-                const discount = Math.round((1 - price / oldPrice) * 100);
-                discountElement.innerHTML = `🎉 Скидка: ${discount}% (Экономия: ${oldPrice - price} руб)`;
-                discountElement.style.color = '#2e7d32';
-                discountElement.style.fontWeight = 'bold';
-            } else if (oldPrice > 0) {
-                discountElement.innerHTML = '❌ Цена со скидкой должна быть меньше старой цены';
-                discountElement.style.color = '#ff4444';
-            } else {
-                discountElement.innerHTML = '';
-            }
+            const price = priceInput?.value || '0';
+            const oldPrice = oldPriceInput?.value || '0';
+            calculateDiscountForInputs(price, oldPrice);
         }
         
-        priceInput.addEventListener('input', calculateDiscount);
-        oldPriceInput.addEventListener('input', calculateDiscount);
-    }
-    function addProductViaAdmin() {
-        const name = document.getElementById('adminProductName').value;
-        const price = document.getElementById('adminProductPrice').value;
-        const oldPrice = document.getElementById('adminProductOldPrice').value;
-        const category = document.getElementById('adminProductCategory').value;
-        const size = document.getElementById('adminProductSize').value;
-        const condition = document.getElementById('adminProductCondition').value;
-        const description = document.getElementById('adminProductDescription').value;
-        const image = document.getElementById('adminProductImage').value;
-
-        // Проверка заполнения полей
-        if (!name || !price || !size || !condition || !description || !image) {
-            alert("❌ Заполните все поля!");
-            return;
+        if (priceInput && oldPriceInput) {
+            priceInput.addEventListener('input', calculateDiscount);
+            oldPriceInput.addEventListener('input', calculateDiscount);
         }
+    }
 
-        if (editingProductId) {
-            // Редактируем существующий товар
-            products[editingProductId] = {
-                name: name,
-                category: category,
-                price: price,
-                oldPrice: oldPrice || null,
-                size: size,
-                condition: condition,
-                description: description,
-                image: image,
-                hasDiscount: oldPrice && parseInt(oldPrice) > parseInt(price)
-            };
-            alert("✅ Товар успешно обновлен!");
-            editingProductId = null;
+    function calculateDiscountForInputs(price, oldPrice) {
+        const discountElement = document.getElementById('discountCalculation');
+        if (!discountElement) return;
+
+        const priceNum = parseFloat(price) || 0;
+        const oldPriceNum = parseFloat(oldPrice) || 0;
+        
+        if (oldPriceNum > 0 && priceNum > 0 && oldPriceNum > priceNum) {
+            const discount = Math.round((1 - priceNum / oldPriceNum) * 100);
+            discountElement.innerHTML = `🎉 Скидка: ${discount}% (Экономия: ${oldPriceNum - priceNum} р.)`;
+            discountElement.style.color = '#2e7d32';
+            discountElement.style.fontWeight = 'bold';
+        } else if (oldPriceNum > 0) {
+            discountElement.innerHTML = '❌ Цена со скидкой должна быть меньше старой цены';
+            discountElement.style.color = '#ff4444';
         } else {
-            // Создаем новый товар
-            const newProductId = Date.now();
-            products[newProductId] = {
-                name: name,
-                category: category,
-                price: price,
-                oldPrice: oldPrice || null,
-                size: size,
-                condition: condition,
-                description: description,
-                image: image,
-                hasDiscount: oldPrice && parseInt(oldPrice) > parseInt(price)
-            };
-            alert("✅ Товар успешно добавлен!");
+            discountElement.innerHTML = '';
         }
-
-        // Сохраняем в localStorage
-        saveProductsToStorage();
-
-        // Обновляем статистику и список товаров
-        loadAdminStats();
-        loadAdminProductsList();
-
-        // Очищаем форму
-        resetAddForm();
     }
 
-    function editProduct(productId) {
-        const product = products[productId];
-        
-        // Извлекаем только числа из цен
-        const priceNumber = extractNumber(product.price);
-        const oldPriceNumber = product.oldPrice ? extractNumber(product.oldPrice) : '';
-        
-        // Заполняем форму данными товара
-        document.getElementById('adminProductName').value = product.name;
-        document.getElementById('adminProductPrice').value = priceNumber;
-        document.getElementById('adminProductOldPrice').value = oldPriceNumber;
-        document.getElementById('adminProductCategory').value = product.category;
-        document.getElementById('adminProductSize').value = product.size;
-        document.getElementById('adminProductCondition').value = product.condition;
-        document.getElementById('adminProductDescription').value = product.description;
-        document.getElementById('adminProductImage').value = product.image;
-        
-        editingProductId = productId;
-        
-        // Прокручиваем к форме
-        document.querySelector('#adminPanel [id="adminProductName"]').scrollIntoView({ behavior: 'smooth' });
-        
-        alert("✏️ Редактируйте товар и нажмите 'Добавить товар' для сохранения");
-        
-        // Рассчитываем скидку при редактировании
-        setTimeout(() => {
-            calculateDiscountForInputs(priceNumber, oldPriceNumber);
-        }, 100);
+function addProductViaAdmin() {
+    const name = document.getElementById('adminProductName')?.value;
+    const price = document.getElementById('adminProductPrice')?.value;
+    const oldPrice = document.getElementById('adminProductOldPrice')?.value;
+    const category = document.getElementById('adminProductCategory')?.value;
+    const size = document.getElementById('adminProductSize')?.value;
+    const description = document.getElementById('adminProductDescription')?.value;
+    const image = document.getElementById('adminProductImage')?.value;
+
+    // Проверка заполнения полей
+    if (!name || !price || !size || !description || !image || !category) {
+        alert("❌ Заполните все поля, включая категорию!");
+        return;
     }
-    // Форматирование цены - только цифры и точка
+
+    if (editingProductId) {
+        // Редактируем существующий товар
+        products[editingProductId] = {
+            name: name,
+            category: category,
+            price: price + ' BYN',
+            oldPrice: oldPrice ? oldPrice + ' BYN' : null,
+            size: size,
+            description: description,
+            image: image,
+            hasDiscount: oldPrice && parseInt(oldPrice) > parseInt(price)
+        };
+        alert("✅ Товар успешно обновлен!");
+        editingProductId = null;
+} else {
+    // Создаем новый товар
+    const newProductId = getNiceProductNumber();
+    products[newProductId] = {
+            name: name,
+            category: category,
+            price: price + ' BYN',
+            oldPrice: oldPrice ? oldPrice + ' BYN' : null,
+            size: size,
+            description: description,
+            image: image,
+            hasDiscount: oldPrice && parseInt(oldPrice) > parseInt(price)
+        };
+        alert("✅ Товар успешно добавлен!");
+    }
+
+    // Сохраняем в localStorage
+    saveProductsToStorage();
+
+    // Обновляем статистику и список товаров
+    loadAdminStats();
+    loadAdminProductsList();
+
+    // Очищаем форму
+    resetAddForm();
+}
+
     function formatPrice(input) {
+        if (!input) return;
+        
         // Убираем всё кроме цифр и точки
         let value = input.value.replace(/[^\d.]/g, '');
         
         // Убираем лишние точки (оставляем только первую)
         const dots = value.split('.').length - 1;
         if (dots > 1) {
-            value = value.replace(/\.+$/, ''); // убираем точки в конце
+            value = value.replace(/\.+$/, '');
             const parts = value.split('.');
             value = parts[0] + (parts[1] ? '.' + parts[1] : '');
         }
@@ -1387,136 +2296,145 @@
         }
     }
 
-    // Расчет скидки для форматированных цен
-    function calculateDiscountForInputs(price, oldPrice) {
-        const discountElement = document.getElementById('discountCalculation');
-        const priceNum = parseFloat(price) || 0;
-        const oldPriceNum = parseFloat(oldPrice) || 0;
+    function previewImageFromUrl(url) {
+        const previewElement = document.getElementById('imagePreview');
+        if (!previewElement) return;
         
-        if (oldPriceNum > 0 && priceNum > 0 && oldPriceNum > priceNum) {
-            const discount = Math.round((1 - priceNum / oldPriceNum) * 100);
-            discountElement.innerHTML = `🎉 Скидка: ${discount}% (Экономия: ${oldPriceNum - priceNum} руб)`;
-            discountElement.style.color = '#2e7d32';
-            discountElement.style.fontWeight = 'bold';
-        } else if (oldPriceNum > 0) {
-            discountElement.innerHTML = '❌ Цена со скидкой должна быть меньше старой цены';
-            discountElement.style.color = '#ff4444';
-        } else {
-            discountElement.innerHTML = '';
-        }
-    }
-
-    // Функция для извлечения чисел (теперь проще)
-    function extractNumber(priceString) {
-        if (!priceString) return 0;
-        return parseFloat(priceString) || 0;
-    }
-
-    // Обработка скидок
-    function setupDiscountCalculator() {
-        const priceInput = document.getElementById('adminProductPrice');
-        const oldPriceInput = document.getElementById('adminProductOldPrice');
-        
-        function calculateDiscount() {
-            const price = priceInput.value || '0';
-            const oldPrice = oldPriceInput.value || '0';
-            calculateDiscountForInputs(price, oldPrice);
-        }
-        
-        priceInput.addEventListener('input', calculateDiscount);
-        oldPriceInput.addEventListener('input', calculateDiscount);
-    }
-    function resetAddForm() {
-        document.getElementById('adminProductName').value = '';
-        document.getElementById('adminProductPrice').value = '';
-        document.getElementById('adminProductOldPrice').value = '';
-        document.getElementById('adminProductSize').value = '';
-        document.getElementById('adminProductCondition').value = '';
-        document.getElementById('adminProductDescription').value = '';
-        document.getElementById('adminProductImage').value = '';
-        document.getElementById('adminProductCategory').value = 'jackets';
-        document.getElementById('discountCalculation').innerHTML = '';
-    }
-  // Поиск в админ-панели
-    function setupAdminSearch() {
-        const searchInput = document.getElementById('adminSearchInput');
-        searchInput.addEventListener('input', function(e) {
-            filterAdminProducts(e.target.value);
-        });
-    }
-
-    function filterAdminProducts(searchTerm) {
-        const container = document.getElementById('adminProductsList');
-        container.innerHTML = '';
-
-        const filteredProducts = Object.entries(products).filter(([id, product]) => {
-            const searchLower = searchTerm.toLowerCase();
-            return (
-                product.name.toLowerCase().includes(searchLower) ||
-                product.price.toLowerCase().includes(searchLower) ||
-                product.size.toLowerCase().includes(searchLower) ||
-                product.condition.toLowerCase().includes(searchLower) ||
-                product.description.toLowerCase().includes(searchLower) ||
-                id.includes(searchTerm)
-            );
-        });
-
-        if (filteredProducts.length === 0) {
-            container.innerHTML = '<div style="text-align: center; color: #666; padding: 2rem;">😞 Товары не найдены</div>';
+        if (!url) {
+            previewElement.innerHTML = '';
             return;
         }
 
-        filteredProducts.forEach(([id, product]) => {
-            const productElement = document.createElement('div');
-            productElement.style.cssText = `
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                border-bottom: 1px solid #eee;
-                background: white;
-                margin-bottom: 0.5rem;
-                border-radius: 5px;
-            `;
-
-            productElement.innerHTML = `
-                <div style="flex: 1;">
-                    <strong>${product.name}</strong><br>
-                    <small>Цена: ${product.price} | Размер: ${product.size} | Категория: ${product.category === 'jackets' ? '🧥 Куртки' : '👖 Джинсы'}</small>
-                </div>
-                <div style="display: flex; gap: 10px;">
-                    <button onclick="editProduct(${id})" style="
-                        background: #4CAF50;
-                        color: white;
-                        border: none;
-                        padding: 5px 10px;
-                        border-radius: 3px;
-                        cursor: pointer;
-                        font-size: 12px;
-                    ">✏️ Редактировать</button>
-                    <button onclick="deleteProduct(${id})" style="
-                        background: #ff4444;
-                        color: white;
-                        border: none;
-                        padding: 5px 10px;
-                        border-radius: 3px;
-                        cursor: pointer;
-                        font-size: 12px;
-                    ">🗑️ Удалить</button>
-                </div>
-            `;
-
-            container.appendChild(productElement);
-        });
+        if (url.match(/\.(jpeg|jpg|gif|png|webp)$/) !== null) {
+            const img = new Image();
+            img.onload = function() {
+                previewElement.innerHTML = `
+                    <div style="margin-bottom: 10px;">
+                        <img src="${url}" style="max-width: 250px; max-height: 200px; border-radius: 8px; border: 2px solid #4CAF50;">
+                    </div>
+                    <div style="color: #4CAF50; font-size: 14px;">
+                        ✅ Картинка загружена успешно!
+                    </div>
+                `;
+            };
+            img.onerror = function() {
+                previewElement.innerHTML = '<div style="color: #ff4444;">❌ Не удалось загрузить картинку</div>';
+            };
+            img.src = url;
+        } else if (url.trim() !== '') {
+            previewElement.innerHTML = '<div style="color: #ff9800;">⚠️ Вставьте прямую ссылку на картинку</div>';
+        }
     }
 
+    function resetAddForm() {
+        const nameInput = document.getElementById('adminProductName');
+        const priceInput = document.getElementById('adminProductPrice');
+        const oldPriceInput = document.getElementById('adminProductOldPrice');
+        const sizeInput = document.getElementById('adminProductSize');
+        const descriptionInput = document.getElementById('adminProductDescription');
+        const imageInput = document.getElementById('adminProductImage');
+        const categoryInput = document.getElementById('adminProductCategory');
+        const discountElement = document.getElementById('discountCalculation');
+        const previewElement = document.getElementById('imagePreview');
+        
+        if (nameInput) nameInput.value = '';
+        if (priceInput) priceInput.value = '';
+        if (oldPriceInput) oldPriceInput.value = '';
+        if (sizeInput) sizeInput.value = '';
+        if (descriptionInput) descriptionInput.value = '';
+        if (imageInput) imageInput.value = '';
+        if (categoryInput) categoryInput.value = 'jackets';
+        if (discountElement) discountElement.innerHTML = '';
+        if (previewElement) previewElement.innerHTML = '';
+    }
+
+    function setupAdminSearch() {
+        const searchInput = document.getElementById('adminSearchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                filterAdminProducts(e.target.value);
+            });
+        }
+    }
+
+function filterAdminProducts(searchTerm) {
+    const container = document.getElementById('adminProductsList');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const filteredProducts = Object.entries(products).filter(([id, product]) => {
+        const searchLower = searchTerm.toLowerCase();
+        return (
+            product.name.toLowerCase().includes(searchLower) ||
+            product.price.toLowerCase().includes(searchLower) ||
+            product.size.toLowerCase().includes(searchLower) ||
+            product.description.toLowerCase().includes(searchLower) ||
+            id.toString().includes(searchTerm)  // ← ИЩЕМ ПО ID (номеру товара)
+        );
+    });
+
+    if (filteredProducts.length === 0) {
+        container.innerHTML = '<div style="text-align: center; color: #666; padding: 2rem;">😞 Товары не найдены</div>';
+        return;
+    }
+
+    filteredProducts.forEach(([id, product]) => {
+        const productElement = document.createElement('div');
+        productElement.style.cssText = `
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            background: white;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+        `;
+
+        productElement.innerHTML = `
+            <div style="flex: 1;">
+                <strong>${product.name}</strong><br>
+                <small>№${id} | Цена: ${product.price} | Размер: ${product.size} | Категория: ${product.category === 'jackets' ? '🧥 Куртки' : '👖 Джинсы'}</small>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="editProduct(${id})" style="
+                    background: #4CAF50;
+                    color: white;
+                    border: none;
+                    padding: 5px 10px;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    font-size: 12px;
+                ">✏️ Редактировать</button>
+                <button onclick="deleteProduct(${id})" style="
+                    background: #ff4444;
+                    color: white;
+                    border: none;
+                    padding: 5px 10px;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    font-size: 12px;
+                ">🗑️ Удалить</button>
+            </div>
+        `;
+
+        container.appendChild(productElement);
+    });
+}
+
     function clearAdminSearch() {
-        document.getElementById('adminSearchInput').value = '';
-        loadAdminProductsList();
+        const searchInput = document.getElementById('adminSearchInput');
+        if (searchInput) {
+            searchInput.value = '';
+            loadAdminProductsList();
+        }
     }
 
     function loadAdminProductsList() {
         const container = document.getElementById('adminProductsList');
+        if (!container) return;
+
         container.innerHTML = '';
 
         for (const [id, product] of Object.entries(products)) {
@@ -1564,7 +2482,7 @@
     }
 
     function deleteProduct(productId) {
-        if (confirm(`❌ Удалить товар "${products[productId].name}"?`)) {
+        if (confirm(`❌ Удалить товар "${products[productId]?.name}"?`)) {
             delete products[productId];
             saveProductsToStorage();
             loadAdminStats();
@@ -1573,23 +2491,279 @@
             alert("✅ Товар удален!");
         }
     }
+// Функция для красивых уведомлений
+function showNotification(message, type = 'success') {
+    const notification = document.getElementById('notification');
+    const notificationText = document.getElementById('notificationText');
+    
+    if (!notification || !notificationText) return;
+    
+    // Устанавливаем цвет в зависимости от типа
+    const colors = {
+        'success': '#4CAF50',
+        'warning': '#ff9800', 
+        'error': '#ff4444'
+    };
+    
+    notification.style.background = colors[type] || colors.success;
+    notificationText.textContent = message;
+    notification.style.opacity = '1';
+    
+    // Показываем уведомление
+    notification.style.transform = 'translateX(-50%) translateY(20px)';
+    
+    // Скрываем через 2 секунды
+    setTimeout(() => {
+        notification.style.transform = 'translateX(-50%) translateY(-100px)';
+        notification.style.opacity = '0';
+    }, 2000);
+}
+// Функция для привязки товаров к разделам
+function updateProductsCategories() {
+    const productIds = Object.keys(products);
+    
+    productIds.forEach((productId, index) => {
+        if (index < 4) {
+            products[productId].category = 'jackets'; // Первые 4 товара - куртки
+        } else {
+            products[productId].category = 'jeans';   // Остальные - джинсы
+        }
+    });
+    
+    saveProductsToStorage();
+    alert("✅ Категории товаров обновлены! Обнови страницу.");
+    loadAllProducts(); // Перезагружаем товары
+}
+// Глобальная переменная для категорий
+let categories = {
+    'jackets': { name: 'Куртки' },
+    'jeans': { name: 'Джинсы' }
+};
 
-    function saveProductsToStorage() {
-        localStorage.setItem('vintageShopProducts', JSON.stringify(products));
+// Загрузка категорий из localStorage
+function loadCategoriesFromStorage() {
+    const savedCategories = localStorage.getItem('vintageShopCategories');
+    if (savedCategories) {
+        categories = JSON.parse(savedCategories);
+    } else {
+        // Если нет сохраненных категорий, создаем стандартные
+        categories = {
+            'jackets': { name: 'Куртки', emoji: '🧥' },
+            'jeans': { name: 'Джинсы', emoji: '👖' }
+        };
+        saveCategoriesToStorage();
     }
+}
 
+// Сохранение категорий в localStorage
+function saveCategoriesToStorage() {
+    localStorage.setItem('vintageShopCategories', JSON.stringify(categories));
+}
+
+// Добавление нового раздела
+function addNewCategory() {
+    const categoryName = document.getElementById('newCategoryName').value.trim();
+    if (!categoryName) {
+        alert('Введите название раздела!');
+        return;
+    }
+    
+    const categoryId = categoryName.toLowerCase().replace(/\s+/g, '_');
+    
+    if (categories[categoryId]) {
+        alert('Раздел с таким названием уже существует!');
+        return;
+    }
+    
+    // Создаем раздел БЕЗ эмодзи
+    categories[categoryId] = {
+        name: categoryName
+    };
+    
+    saveCategoriesToStorage();
+    updateCategoriesList();
+    updateCategorySelect();
+    updateCategoryButtons();
+    document.getElementById('newCategoryName').value = '';
+    
+    alert(`✅ Раздел "${categoryName}" добавлен!`);
+}
+
+// Обновление списка разделов в админке
+function updateCategoriesList() {
+    const container = document.getElementById('categoriesList');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    Object.entries(categories).forEach(([id, category]) => {
+        const categoryElement = document.createElement('div');
+        categoryElement.style.cssText = `
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        `;
+        
+// Проверяем есть ли товары в этой категории
+const hasProducts = Object.values(products).some(product => product.category === id);
+
+categoryElement.innerHTML = `
+    <div>
+        <strong>${category.name}</strong>
+        <small style="color: #666; margin-left: 10px;">ID: ${id}</small>
+        ${hasProducts ? '<br><small style="color: #ff4444;">⚠️ В разделе есть товары</small>' : ''}
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <button onclick="editCategory('${id}')" style="
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        ">✏️</button>
+        <button onclick="deleteCategory('${id}')" style="
+            background: ${hasProducts ? '#ccc' : '#ff4444'};
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        " ${hasProducts ? 'disabled' : ''}>🗑️</button>
+    </div>
+`;
+        
+        container.appendChild(categoryElement);
+    });
+}
+
+// Обновление select в форме добавления товара
+function updateCategorySelect() {
+    const select = document.getElementById('adminProductCategory');
+    if (!select) return;
+    
+    select.innerHTML = '';
+    
+    // Добавляем опцию по умолчанию
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = '-- Выберите категорию --';
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    select.appendChild(defaultOption);
+    
+    // Добавляем все категории
+    Object.entries(categories).forEach(([id, category]) => {
+        const option = document.createElement('option');
+        option.value = id;
+        option.textContent = category.name;
+        select.appendChild(option);
+    });
+}
+
+// Удаление раздела
+function deleteCategory(categoryId) {
+    if (Object.values(products).some(product => product.category === categoryId)) {
+        alert('❌ Нельзя удалить раздел, в котором есть товары!');
+        return;
+    }
+    
+    if (confirm(`Удалить раздел "${categories[categoryId].name}"?`)) {
+        delete categories[categoryId];
+        saveCategoriesToStorage();
+        updateCategoriesList();
+        updateCategorySelect();
+        alert('✅ Раздел удален!');
+    }
+}
+// Редактирование раздела
+// Редактирование раздела
+function editCategory(categoryId) {
+    const newName = prompt('Новое название раздела:', categories[categoryId].name);
+    if (newName) {
+        categories[categoryId].name = newName;
+        saveCategoriesToStorage();
+        updateCategoriesList();
+        updateCategorySelect();
+        updateCategoryButtons();
+        alert('✅ Раздел обновлен!');
+    }
+}
+
+// ▼▼▼ ВСТАВЬ СЮДА функцию updateCategoryButtons ▼▼▼
+
+// Обновление кнопок категорий на сайте
+function updateCategoryButtons() {
+    const container = document.querySelector('.category-buttons');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    // Кнопка "Все товары"
+    const allButton = document.createElement('button');
+    allButton.className = 'category-button active';
+    allButton.textContent = 'Все товары';
+    allButton.onclick = () => goToCategory('all');
+    container.appendChild(allButton);
+    
+    // Кнопки для каждой категории
+    Object.entries(categories).forEach(([id, category]) => {
+        const button = document.createElement('button');
+        button.className = 'category-button';
+        button.textContent = category.name;
+        button.onclick = () => goToCategory(id);
+        container.appendChild(button);
+    });
+}
+// Быстрое исправление категорий товаров
+function fixProductsCategories() {
+    Object.entries(products).forEach(([id, product], index) => {
+        if (!product.category) {
+            // Если у товара нет категории, назначаем её
+            if (index < 4) {
+                product.category = 'jackets';
+            } else {
+                product.category = 'jeans';
+            }
+        }
+    });
+    saveProductsToStorage();
+    alert("✅ Категории товаров исправлены! Обнови страницу.");
+}
+    // Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    initializeProducts();
+    loadFavoritesFromStorage();
+    cleanupFavorites();
+    loadCategoriesFromStorage();  
+    updateCategorySelect();       
+    updateCategoryButtons();      
+    updateCategoriesList();  
+    loadAllProducts();
+    checkUrlParams();
+    updateFavoriteHearts();
+    
+    const articleInput = document.getElementById('articleInput');
+    if (articleInput) {
+        articleInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchByArticle();
+            }
+        });
+    }
+});
 
     // Автоматически показываем админку при ?admin в URL
     if (window.location.href.includes('?admin')) {
         setTimeout(showAdminPanel, 1000);
     }
-
-    // Инициализируем товары при загрузке страницы
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeProducts();
-        loadAllProducts(); // Загружаем товары на страницу
-    });
 </script>
-
 </body>
 </html>
