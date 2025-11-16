@@ -1179,97 +1179,66 @@
     let favorites = [];
     let editingProductId = null;
     const ADMIN_PASSWORD = "1";
+// Синхронизация данных между всеми устройствами
+function syncDataAcrossDevices() {
+    // Принудительно устанавливаем стандартные категории
+    const standardCategories = {
+        'jackets': { name: 'Куртки' },
+        'jeans': { name: 'Джинсы' },
+        'hats': { name: 'Шапки' }  // Добавляем шапки принудительно
+    };
+    
+    localStorage.setItem('vintageShopCategories', JSON.stringify(standardCategories));
+    
+    // Обновляем категории товаров
+    Object.values(products).forEach(product => {
+        if (!product.category) {
+            // Назначаем категории по умолчанию
+            if (product.name.includes('курт') || product.name.includes('Курт')) {
+                product.category = 'jackets';
+            } else if (product.name.includes('джинс') || product.name.includes('Джинс')) {
+                product.category = 'jeans';
+            } else {
+                product.category = 'hats'; // По умолчанию в шапки
+            }
+        }
+    });
+    
+    saveProductsToStorage();
+}
 
+// Вызовите эту функцию при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    initializeProducts();
+    syncDataAcrossDevices();  
+});
     // Функция для инициализации товаров
-// Функция для инициализации товаров
 function initializeProducts() {
     const savedProducts = localStorage.getItem('vintageShopProducts');
     
     if (savedProducts && Object.keys(JSON.parse(savedProducts)).length > 0) {
         products = JSON.parse(savedProducts);
-        // Убедимся что у всех товаров есть простые номера
-        ensureSimpleNumbering();
     } else {
-        // Создаем стандартные товары с простой нумерацией
+        // Создаем ТОЛЬКО ваши 2 текущих товара
         products = {
             1: {
-                name: 'Куртка джинсовая 90-х',
-                category: 'jackets',
-                price: '80',
+                name: 'Название вашего первого товара',
+                category: 'jackets', // или 'hats'
+                price: '100 BYN',
                 oldPrice: null,
                 size: 'M',
-                description: 'Винтажная джинсовая куртка в отличном состоянии. Идеально подходит для создания стильного образа.',
-                image: 'Куртка джинсовая 90-х.jpg',
+                description: 'Описание товара',
+                image: 'URL_вашей_картинки.jpg',
                 hasDiscount: false
             },
             2: {
-                name: 'Куртка кожаная 2000-х',
-                category: 'jackets',
-                price: '150',
+                name: 'Название второго товара', 
+                category: 'jeans',
+                price: '150 BYN',
                 oldPrice: null,
                 size: 'L',
-                description: 'Качественная кожаная куртка. Стиль 2000-х годов в отличном состоянии.',
-                image: 'Куртка кожаная 2000-х.jpg',
-                hasDiscount: false
-            },
-            3: {
-                name: 'Джинсы винтажные 90-х',
-                category: 'jeans',
-                price: '70',
-                oldPrice: null,
-                size: 'W32 L34',
-                description: 'Аутентичные джинсы 90-х годов. Уникальный винтажный крой.',
-                image: 'Джинсы винтажные 90-х.jpg',
-                hasDiscount: false
-            },
-            4: {
-                name: 'Джинсы потертые 2010',
-                category: 'jeans',
-                price: '60',
-                oldPrice: null,
-                size: 'W30 L32',
-                description: 'Стильные потертые джинсы. Модный distressed эффект.',
-                image: 'Джинсы потертые 2010.jpg',
-                hasDiscount: false
-            },
-            5: {
-                name: 'Куртка ветровка 80-х',
-                category: 'jackets',
-                price: '90',
-                oldPrice: null,
-                size: 'L',
-                description: 'Винтажная ветровка в стиле 80-х. Яркий цвет, отличное состояние.',
-                image: 'Куртка ветровка 80-х.jpg',
-                hasDiscount: false
-            },
-            6: {
-                name: 'Джинсы клеш 70-х',
-                category: 'jeans',
-                price: '85',
-                oldPrice: null,
-                size: 'W31 L32',
-                description: 'Настоящие джинсы клеш эпохи диско. Уникальный предмет гардероба.',
-                image: 'Джинсы клеш 70-х.jpg',
-                hasDiscount: false
-            },
-            7: {
-                name: 'Куртка байкерская',
-                category: 'jackets',
-                price: '200',
-                oldPrice: null,
-                size: 'XL',
-                description: 'Настоящая байкерская куртка с металлической фурнитурой.',
-                image: 'Куртка байкерская.jpg',
-                hasDiscount: false
-            },
-            8: {
-                name: 'Джинсы с вышивкой',
-                category: 'jeans',
-                price: '75 р.',
-                oldPrice: null,
-                size: 'W30 L30',
-                description: 'Джинсы с уникальной ручной вышивкой. Эксклюзивный дизайн.',
-                image: 'Джинсы с вышивкой.jpg',
+                description: 'Описание товара',
+                image: 'URL_картинки.jpg',
                 hasDiscount: false
             }
         };
