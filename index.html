@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vintage Shop - Магазин винтажной одежды</title>
     <style>
+    /* Фиксируем ширину и отключаем горизонтальный скролл */
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+    position: relative;
+}
+
+* {
+    box-sizing: border-box;
+}
         * {
             margin: 0;
             padding: 0;
@@ -733,6 +743,112 @@
 /* Возвращаем на место когда обе закрыты */
 .cart-icon, .favorite-icon {
     transition: all 0.3s ease;
+}
+/* ▼▼▼ АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ ▼▼▼ */
+
+/* Для экранов меньше 768px (телефоны) */
+@media (max-width: 768px) {
+    /* Шапка */
+    .header h1 {
+        font-size: 2rem !important;
+    }
+    
+    .header p {
+        font-size: 1rem !important;
+    }
+    
+    /* Поиск */
+    .search-section {
+        margin: 1rem auto !important;
+        padding: 1rem !important;
+    }
+    
+    .search-box {
+        flex-direction: column !important;
+    }
+    
+    .search-box input {
+        font-size: 16px !important; /* Отключает зум в iOS */
+        height: 50px !important;
+    }
+    
+    .search-box button {
+        height: 50px !important;
+        min-width: auto !important;
+    }
+    
+    /* Сетка товаров */
+    .products-grid {
+        grid-template-columns: 1fr 1fr !important; /* 2 колонки вместо 4 */
+        gap: 1rem !important;
+        padding: 1rem !important;
+    }
+    
+    .product-image {
+        height: 200px !important; /* Уменьшаем высоту картинок */
+    }
+    
+    /* Кнопки категорий */
+    .category-buttons {
+        flex-wrap: wrap !important;
+        padding: 0 1rem !important;
+    }
+    
+    .category-button {
+        padding: 8px 16px !important;
+        font-size: 14px !important;
+    }
+    
+    /* Корзина и избранное */
+    .cart-sidebar,
+    .favorite-sidebar {
+        width: 100% !important; /* На всю ширину */
+        right: -100% !important;
+    }
+    
+    .cart-icon,
+    .favorite-icon {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 1.2rem !important;
+    }
+    
+    /* Кнопки в товарах */
+    .product-actions {
+        flex-direction: column !important;
+    }
+    
+    .buy-button,
+    .cart-button {
+        padding: 15px !important; /* Большие кнопки для пальцев */
+        font-size: 14px !important;
+    }
+    
+    /* Футер */
+    footer {
+        padding: 2rem 1rem !important;
+    }
+    
+    /* Админ-панель */
+    #adminPanel > div {
+        margin: 1rem !important;
+        padding: 1rem !important;
+    }
+}
+
+/* Для очень маленьких экранов (меньше 480px) */
+@media (max-width: 480px) {
+    .products-grid {
+        grid-template-columns: 1fr !important; /* 1 колонка */
+    }
+    
+    .header h1 {
+        font-size: 1.8rem !important;
+    }
+    
+    .product-info {
+        padding: 1rem !important;
+    }
 }
     </style>
 </head>
